@@ -1183,8 +1183,106 @@
       setScreen('startScreen');
     });
 
-        // --- Подготовка к редактору / интеграции в Genially ---
-    // Эти методы можно будет вызывать из внешнего редактора или из Genially.
+        // --- Дополнительные игровые улучшения ---
+
+    // Текстовое состояние питомца
+    const moodLabel = document.createElement('div');
+    moodLabel.style.marginTop = '10px';
+    moodLabel.style.fontWeight = '600';
+    document.querySelector('.pet-stage').appendChild(moodLabel);
+
+    function updateMoodText(){
+      if(state.hunger > 70) moodLabel.textContent = `${state.petName} очень голоден 🍎`;
+      else if(state.energy < 30) moodLabel.textContent = `${state.petName} устал 😴`;
+      else if(state.happiness < 30) moodLabel.textContent = `${state.petName} грустит ☹️`;
+      else moodLabel.textContent = `${state.petName} чувствует себя отлично 😄`;
+    }
+
+    // Таймер задания
+    let taskTimerInterval = null;
+    let taskTimeLeft = 0;
+
+    const timerLabel = document.createElement('div');
+    timerLabel.style.fontWeight = '600';
+    timerLabel.style.marginBottom = '6px';
+    els.taskBox.prepend(timerLabel);
+
+    function startTaskTimer(){
+      taskTimeLeft = 10;
+      timerLabel.textContent = `⏱ ${taskTimeLeft} сек`;
+
+      if(taskTimerInterval) clearInterval(taskTimerInterval);
+
+      taskTimerInterval = setInterval(()=>{
+        taskTimeLeft--;
+        timerLabel.textContent = `⏱ ${taskTimeLeft} сек`;
+
+        if(taskTimeLeft <= 0){
+          clearInterval(taskTimerInterval);
+          handleTaskFail();
+          updateFeedback('Время вышло ⏱', 'bad');
+        }
+      },1000);
+    }
+
+    // Случайные события
+    function randomEvent(){
+      if(state.gameOver || !state.started) return;
+
+      const r = Math.random();
+
+      if(r < 0.3){
+        state.happiness = clamp(state.happiness + 10);
+        updateFeedback('Питомец нашёл яблоко 🍎 +10 счастья','good');
+      }
+      else if(r < 0.6){
+        state.hygiene = clamp(state.hygiene - 15);
+        updateFeedback('Питомец испачкался в луже 💧 -15 гигиены','warn');
+      }
+    }
+
+    setInterval(randomEvent, 45000);
+
+    // Эволюция питомца
+    function updateEvolution(){
+      if(state.level === 2) document.documentElement.style.setProperty('--pet-color','#fbbf24');
+      if(state.level === 3) document.documentElement.style.setProperty('--pet-color','#34d399');
+      if(state.level === 4) document.documentElement.style.setProperty('--pet-color','#60a5fa');
+      if(state.level === 5) document.documentElement.style.setProperty('--pet-color','#f472b6');
+    }
+
+    // Переопределяем gainXp чтобы добавить эволюцию
+    const originalGainXp = gainXp;
+    gainXp = function(amount){
+      originalGainXp(amount);
+      updateEvolution();
+    }
+
+    // Объяснение ошибки
+    const originalHandleFail = handleTaskFail;
+    handleTaskFail = function(){
+      const correct = state.activeTask?.answer;
+      originalHandleFail();
+      if(correct) updateFeedback(`Неверно. Правильный ответ: ${correct}`, 'bad');
+    }
+
+    // Перехватываем рендер задания чтобы запускать таймер
+    const originalRenderTask = renderTask;
+    renderTask = function(task){
+      originalRenderTask(task);
+      startTaskTimer();
+    }
+
+    // Добавим обновление текста настроения в основной UI
+    const originalUpdateUI = updateUI;
+    updateUI = function(){
+      originalUpdateUI();
+      updateMoodText();
+    }
+
+
+    // --- Подготовка к редактору / интеграции в Genially ---
+
     function getSerializableConfig() {
       return JSON.parse(JSON.stringify(GAME_CONFIG));
     }
@@ -1225,7 +1323,6 @@
       obj[parts[parts.length - 1]] = value;
     }
 
-    // Делаем API доступным снаружи.
     window.TamagotchiGameAPI = {
       startGame,
       resetGame,
