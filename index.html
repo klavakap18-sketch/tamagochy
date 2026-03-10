@@ -17,6 +17,7 @@
       --bar-bg: #ece7f9;
       --shadow: 0 12px 30px rgba(0,0,0,.08);
       --radius: 20px;
+      --pet-color: #f59e0b;
     }
 
     * { box-sizing: border-box; }
@@ -35,11 +36,7 @@
       gap: 20px;
     }
 
-    .screen {
-      display: none;
-      gap: 20px;
-    }
-
+    .screen { display: none; gap: 20px; }
     .screen.active { display: grid; }
 
     .card {
@@ -49,117 +46,163 @@
       padding: 20px;
     }
 
-    .start-card {
-      max-width: 700px;
-      margin: 50px auto;
-    }
-
+    .start-card { max-width: 700px; margin: 50px auto; }
     h1, h2, h3, p { margin-top: 0; }
 
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 20px;
-    }
+    .grid-2 { display: grid; grid-template-columns: 1.2fr .8fr; gap: 20px; }
+    @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
 
-    @media (max-width: 900px) {
-      .grid-2 { grid-template-columns: 1fr; }
-    }
-
-    label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    input, select, button {
-      font: inherit;
-    }
+    label { display: block; font-weight: 600; margin-bottom: 8px; }
+    input, select, button { font: inherit; }
 
     input[type="text"], input[type="number"], select {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1px solid #ddd6fe;
-      border-radius: 14px;
-      outline: none;
-      background: #fff;
+      width: 100%; padding: 12px 14px; border: 1px solid #ddd6fe;
+      border-radius: 14px; outline: none; background: #fff;
     }
 
     button {
-      border: none;
-      border-radius: 16px;
-      padding: 12px 16px;
-      cursor: pointer;
-      background: var(--accent);
-      color: #fff;
-      font-weight: 700;
+      border: none; border-radius: 16px; padding: 12px 16px; cursor: pointer;
+      background: var(--accent); color: #fff; font-weight: 700;
       transition: transform .15s ease, opacity .2s ease;
     }
-
     button:hover { transform: translateY(-1px); }
     button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
-
-    .secondary {
-      background: #ede9fe;
-      color: #4c1d95;
-    }
-
-    .danger {
-      background: #fee2e2;
-      color: #991b1b;
-    }
+    .secondary { background: #ede9fe; color: #4c1d95; }
+    .danger { background: #fee2e2; color: #991b1b; }
 
     .pet-stage {
-      min-height: 320px;
-      display: grid;
-      place-items: center;
+      min-height: 320px; display: grid; place-items: center; position: relative;
+      overflow: hidden; background: radial-gradient(circle at top, #f5f3ff, #fffaf4 65%);
+    }
+
+    .scene-stage {
+      min-height: 340px;
       position: relative;
       overflow: hidden;
-      background: radial-gradient(circle at top, #f5f3ff, #fffaf4 65%);
+      border-radius: 24px;
+      border: 1px solid #ede9fe;
+      margin-top: 18px;
+      display: none;
+      background: linear-gradient(180deg, #f9fafb, #eef2ff);
+    }
+    .scene-stage.active { display: block; }
+
+    .scene-background {
+      position: absolute; inset: 0;
+      transition: background .3s ease;
+    }
+    .scene-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .scene-floor {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 30%;
+      background: rgba(255,255,255,.55);
+      border-top: 2px solid rgba(255,255,255,.5);
+    }
+    .scene-title-badge {
+      position: absolute;
+      top: 16px; left: 16px;
+      background: rgba(255,255,255,.9);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+      z-index: 3;
+    }
+    .scene-subtitle-badge {
+      position: absolute;
+      top: 62px; left: 16px;
+      background: rgba(255,255,255,.82);
+      padding: 8px 12px;
+      border-radius: 14px;
+      color: var(--muted);
+      max-width: 320px;
+      z-index: 3;
     }
 
-    .pet {
-      width: 180px;
-      height: 180px;
-      position: relative;
-      transition: transform .25s ease;
+    .scene-pet {
+      position: absolute;
+      left: 50%; bottom: 62px;
+      transform: translateX(-50%);
+      z-index: 2;
+      transition: all .35s ease;
+    }
+
+    .prop {
+      position: absolute;
+      z-index: 1;
       user-select: none;
     }
+    .prop.cardlike {
+      background: rgba(255,255,255,.82);
+      padding: 10px 12px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(2px);
+    }
+    .prop.big { font-size: 56px; }
+    .prop.medium { font-size: 42px; }
+    .prop.small { font-size: 28px; }
 
+    .scene-options-floating {
+      position: absolute;
+      left: 16px; right: 16px; bottom: 16px;
+      z-index: 4;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 700px) {
+      .scene-options-floating { grid-template-columns: 1fr; }
+    }
+
+    .scene-option-btn {
+      background: rgba(255,255,255,.92);
+      color: var(--text);
+      border: 1px solid #ddd6fe;
+      box-shadow: var(--shadow);
+      text-align: left;
+      min-height: 78px;
+    }
+    .scene-option-btn .option-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .scene-option-btn small { color: var(--muted); }
+
+    .pet {
+      width: 180px; height: 180px; position: relative; transition: transform .25s ease; user-select: none;
+    }
     .pet.bounce { animation: bounce .6s ease; }
     .pet.sleeping { animation: sleepFloat 2.2s ease-in-out infinite; }
     .pet.sad { transform: translateY(8px) scale(.98); }
     .pet.sick { filter: grayscale(.2); }
+    .pet.walking { animation: sideWalk 1s ease-in-out infinite; }
+    .pet.washing { animation: wobble 1.2s ease-in-out infinite; }
+    .pet.eating { animation: nibble .9s ease-in-out infinite; }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-14px); }
-      70% { transform: translateY(-6px); }
-    }
-
-    @keyframes sleepFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(8px); }
-    }
+    @keyframes bounce { 0%,100% { transform: translateY(0); } 40% { transform: translateY(-14px); } 70% { transform: translateY(-6px); } }
+    @keyframes sleepFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+    @keyframes sideWalk { 0%,100% { transform: translateX(-8px); } 50% { transform: translateX(8px); } }
+    @keyframes wobble { 0%,100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+    @keyframes nibble { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04) translateY(2px); } }
 
     .pet-body {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: var(--pet-color, #f59e0b);
-      position: relative;
-      box-shadow: inset 0 -10px 0 rgba(0,0,0,.08);
+      width: 100%; height: 100%; border-radius: 50%; background: var(--pet-color, #f59e0b);
+      position: relative; box-shadow: inset 0 -10px 0 rgba(0,0,0,.08);
     }
 
     .ear {
-      width: 44px;
-      height: 44px;
-      background: var(--pet-color, #f59e0b);
-      position: absolute;
-      top: -8px;
-      border-radius: 16px 16px 8px 8px;
+      width: 44px; height: 44px; background: var(--pet-color, #f59e0b);
+      position: absolute; top: -8px; border-radius: 16px 16px 8px 8px;
     }
-
     .ear.left { left: 18px; transform: rotate(-25deg); }
     .ear.right { right: 18px; transform: rotate(25deg); }
     .pet.rabbit .ear { height: 72px; width: 30px; top: -34px; border-radius: 16px; }
@@ -168,189 +211,70 @@
     .pet.cat .ear { border-radius: 6px 22px 6px 22px; }
 
     .eye {
-      width: 18px;
-      height: 22px;
-      background: #111827;
-      border-radius: 50%;
-      position: absolute;
-      top: 72px;
+      width: 18px; height: 22px; background: #111827; border-radius: 50%; position: absolute; top: 72px;
     }
-
     .eye.left { left: 52px; }
     .eye.right { right: 52px; }
     .eye.closed { height: 4px; top: 80px; border-radius: 999px; }
 
     .mouth {
-      position: absolute;
-      left: 50%;
-      top: 102px;
-      transform: translateX(-50%);
-      width: 44px;
-      height: 22px;
-      border-bottom: 5px solid #111827;
-      border-radius: 0 0 30px 30px;
+      position: absolute; left: 50%; top: 102px; transform: translateX(-50%);
+      width: 44px; height: 22px; border-bottom: 5px solid #111827; border-radius: 0 0 30px 30px;
     }
-
     .mouth.sad {
-      border-bottom: none;
-      border-top: 5px solid #111827;
-      border-radius: 30px 30px 0 0;
-      top: 110px;
+      border-bottom: none; border-top: 5px solid #111827; border-radius: 30px 30px 0 0; top: 110px;
     }
-
     .mouth.flat {
-      width: 34px;
-      height: 0;
-      border: none;
-      border-top: 5px solid #111827;
-      border-radius: 999px;
-      top: 112px;
+      width: 34px; height: 0; border: none; border-top: 5px solid #111827; border-radius: 999px; top: 112px;
     }
 
     .cheek {
-      width: 18px;
-      height: 12px;
-      background: rgba(255,255,255,.35);
-      position: absolute;
-      top: 102px;
-      border-radius: 999px;
+      width: 18px; height: 12px; background: rgba(255,255,255,.35); position: absolute; top: 102px; border-radius: 999px;
     }
-
     .cheek.left { left: 30px; }
     .cheek.right { right: 30px; }
 
     .level-badge {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: #fff;
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-weight: 700;
-      box-shadow: var(--shadow);
+      position: absolute; top: 16px; right: 16px; background: #fff; border-radius: 999px; padding: 8px 12px;
+      font-weight: 700; box-shadow: var(--shadow);
     }
 
-    .status-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
+    .status-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .stat-card { background: #faf7ff; border-radius: 16px; padding: 12px; }
+    .stat-head { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 700; }
+    .bar { width: 100%; height: 12px; background: var(--bar-bg); border-radius: 999px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 999px; transition: width .3s ease; }
 
-    .stat-card {
-      background: #faf7ff;
-      border-radius: 16px;
-      padding: 12px;
-    }
-
-    .stat-head {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-      font-weight: 700;
-    }
-
-    .bar {
-      width: 100%;
-      height: 12px;
-      background: var(--bar-bg);
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .bar-fill {
-      height: 100%;
-      border-radius: 999px;
-      transition: width .3s ease;
-    }
-
-    .actions {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    @media (max-width: 560px) {
-      .actions { grid-template-columns: 1fr; }
-      .status-grid { grid-template-columns: 1fr; }
-    }
+    .actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    @media (max-width: 560px) { .actions { grid-template-columns: 1fr; } .status-grid { grid-template-columns: 1fr; } }
 
     .action-btn {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      text-align: left;
-      background: #fff;
-      color: var(--text);
-      border: 1px solid #ede9fe;
+      display: flex; align-items: center; justify-content: space-between; gap: 10px; text-align: left;
+      background: #fff; color: var(--text); border: 1px solid #ede9fe;
     }
-
     .action-btn strong { display: block; }
     .action-btn small { color: var(--muted); }
 
     .task-box {
-      display: none;
-      gap: 14px;
-      margin-top: 16px;
-      padding: 16px;
-      background: #fcfbff;
-      border: 1px dashed #c4b5fd;
-      border-radius: 16px;
+      display: none; gap: 14px; margin-top: 16px; padding: 16px; background: #fcfbff;
+      border: 1px dashed #c4b5fd; border-radius: 16px;
     }
-
     .task-box.active { display: grid; }
-
-    .choices {
-      display: grid;
-      gap: 10px;
-    }
-
-    .choice {
-      background: #fff;
-      color: var(--text);
-      border: 1px solid #ddd6fe;
-    }
+    .choices { display: grid; gap: 10px; }
+    .choice { background: #fff; color: var(--text); border: 1px solid #ddd6fe; }
 
     .feedback {
-      min-height: 52px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: #f8fafc;
-      color: #334155;
+      min-height: 52px; padding: 12px 14px; border-radius: 14px; background: #f8fafc; color: #334155;
     }
-
     .feedback.good { background: #dcfce7; color: #166534; }
     .feedback.bad { background: #fee2e2; color: #991b1b; }
     .feedback.warn { background: #fef3c7; color: #92400e; }
 
-    .row {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
+    .row { display: flex; gap: 12px; flex-wrap: wrap; }
     .muted { color: var(--muted); }
-
-    .topline {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      align-items: flex-start;
-      flex-wrap: wrap;
-    }
-
-    .pill {
-      background: #f3f4f6;
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-size: 14px;
-    }
-
-    .end-screen {
-      max-width: 760px;
-      margin: 40px auto;
-      text-align: center;
-    }
+    .topline { display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+    .pill { background: #f3f4f6; border-radius: 999px; padding: 6px 10px; font-size: 14px; }
+    .end-screen { max-width: 760px; margin: 40px auto; text-align: center; }
   </style>
 </head>
 <body>
@@ -433,6 +357,16 @@
                 <div class="cheek right"></div>
               </div>
             </div>
+          </div>
+
+          <div id="sceneStage" class="scene-stage">
+            <div id="sceneBackground" class="scene-background"></div>
+            <div id="sceneTitleBadge" class="scene-title-badge"></div>
+            <div id="sceneSubtitleBadge" class="scene-subtitle-badge"></div>
+            <div id="sceneLayer" class="scene-layer"></div>
+            <div class="scene-floor"></div>
+            <div id="scenePet" class="scene-pet"></div>
+            <div id="sceneOptionsFloating" class="scene-options-floating"></div>
           </div>
 
           <div class="status-grid" style="margin-top: 18px;">
@@ -1185,101 +1119,405 @@
 
         // --- Дополнительные игровые улучшения ---
 
-    // Текстовое состояние питомца
+    const SAVE_KEY = 'tamagotchi-save-v2';
+
+    GAME_CONFIG.scenes = {
+      meta: {
+        backgrounds: {
+          feed: 'linear-gradient(180deg, #fff7ed 0%, #ffedd5 48%, #fde68a 100%)',
+          walk: 'linear-gradient(180deg, #dbeafe 0%, #bfdbfe 40%, #86efac 100%)',
+          toilet: 'linear-gradient(180deg, #ecfeff 0%, #cffafe 45%, #e0f2fe 100%)',
+          sleep: 'linear-gradient(180deg, #1e1b4b 0%, #312e81 45%, #4338ca 100%)'
+        }
+      },
+      feed: {
+        title: 'Кухня',
+        subtitle: 'Питомец за столом. Выбери, чем его кормить.',
+        emoji: '🍽️',
+        options: [
+          { id: 'apple', label: 'Яблоко', emoji: '🍎', bonus: { happiness: 2 } },
+          { id: 'porridge', label: 'Каша', emoji: '🥣', bonus: { hunger: -2 } },
+          { id: 'carrot', label: 'Морковка', emoji: '🥕', bonus: { hygiene: 1 } }
+        ]
+      },
+      walk: {
+        title: 'Улица',
+        subtitle: 'Питомец вышел гулять. Выбери формат прогулки.',
+        emoji: '🌳',
+        options: [
+          { id: 'park', label: 'Парк', emoji: '🌳', bonus: { happiness: 3 } },
+          { id: 'ball', label: 'С мячом', emoji: '⚽', bonus: { happiness: 4, energy: -1 } },
+          { id: 'run', label: 'Пробежка', emoji: '🏃', bonus: { energy: 2, hunger: 1 } }
+        ]
+      },
+      toilet: {
+        title: 'Ванная',
+        subtitle: 'Питомцу нужно привести себя в порядок.',
+        emoji: '🛁',
+        options: [
+          { id: 'wash', label: 'Умыться', emoji: '🚿', bonus: { hygiene: 3 } },
+          { id: 'brush', label: 'Почистить зубы', emoji: '🪥', bonus: { hygiene: 4 } },
+          { id: 'bath', label: 'Ванна', emoji: '🫧', bonus: { happiness: 2, hygiene: 5 } }
+        ]
+      },
+      sleep: {
+        title: 'Спальня',
+        subtitle: 'Подготовь питомца ко сну.',
+        emoji: '🌙',
+        options: [
+          { id: 'blanket', label: 'Под одеяло', emoji: '🛌', bonus: { energy: 3 } },
+          { id: 'lullaby', label: 'Колыбельная', emoji: '🎵', bonus: { happiness: 2 } },
+          { id: 'night', label: 'Ночной сон', emoji: '💤', bonus: { energy: 4 } }
+        ]
+      }
+    };
+
     const moodLabel = document.createElement('div');
     moodLabel.style.marginTop = '10px';
     moodLabel.style.fontWeight = '600';
+    moodLabel.style.background = 'rgba(255,255,255,.88)';
+    moodLabel.style.padding = '8px 12px';
+    moodLabel.style.borderRadius = '999px';
+    moodLabel.style.boxShadow = 'var(--shadow)';
+    moodLabel.style.position = 'absolute';
+    moodLabel.style.left = '16px';
+    moodLabel.style.bottom = '16px';
     document.querySelector('.pet-stage').appendChild(moodLabel);
 
-    function updateMoodText(){
-      if(state.hunger > 70) moodLabel.textContent = `${state.petName} очень голоден 🍎`;
-      else if(state.energy < 30) moodLabel.textContent = `${state.petName} устал 😴`;
-      else if(state.happiness < 30) moodLabel.textContent = `${state.petName} грустит ☹️`;
-      else moodLabel.textContent = `${state.petName} чувствует себя отлично 😄`;
-    }
+    const sceneStageEl = document.getElementById('sceneStage');
+    const sceneEls = {
+      stage: sceneStageEl,
+      bg: document.getElementById('sceneBackground'),
+      title: document.getElementById('sceneTitleBadge'),
+      subtitle: document.getElementById('sceneSubtitleBadge'),
+      layer: document.getElementById('sceneLayer'),
+      pet: document.getElementById('scenePet'),
+      options: document.getElementById('sceneOptionsFloating')
+    };
 
-    // Таймер задания
+    const taskMeta = document.createElement('div');
+    taskMeta.className = 'muted';
+    taskMeta.style.fontWeight = '600';
+    taskMeta.style.marginBottom = '6px';
+    els.taskBox.prepend(taskMeta);
+
     let taskTimerInterval = null;
     let taskTimeLeft = 0;
-
     const timerLabel = document.createElement('div');
-    timerLabel.style.fontWeight = '600';
+    timerLabel.style.fontWeight = '700';
     timerLabel.style.marginBottom = '6px';
     els.taskBox.prepend(timerLabel);
 
-    function startTaskTimer(){
-      taskTimeLeft = 10;
-      timerLabel.textContent = `⏱ ${taskTimeLeft} сек`;
+    const saveBar = document.createElement('div');
+    saveBar.className = 'row';
+    saveBar.style.marginTop = '12px';
+    saveBar.innerHTML = `
+      <button type="button" class="secondary" id="saveGameBtn">Сохранить</button>
+      <button type="button" class="secondary" id="loadGameBtn">Загрузить</button>
+      <button type="button" class="secondary" id="clearSaveBtn">Сбросить сохранение</button>
+    `;
+    document.querySelector('.topline').appendChild(saveBar);
 
-      if(taskTimerInterval) clearInterval(taskTimerInterval);
-
-      taskTimerInterval = setInterval(()=>{
-        taskTimeLeft--;
-        timerLabel.textContent = `⏱ ${taskTimeLeft} сек`;
-
-        if(taskTimeLeft <= 0){
-          clearInterval(taskTimerInterval);
-          handleTaskFail();
-          updateFeedback('Время вышло ⏱', 'bad');
-        }
-      },1000);
+    function updateMoodText() {
+      if (state.hunger > 70) moodLabel.textContent = `${state.petName} очень голоден 🍎`;
+      else if (state.energy < 30) moodLabel.textContent = `${state.petName} устал 😴`;
+      else if (state.happiness < 30) moodLabel.textContent = `${state.petName} грустит ☹️`;
+      else if (state.hygiene < 30) moodLabel.textContent = `${state.petName} хочет привести себя в порядок 🫧`;
+      else moodLabel.textContent = `${state.petName} чувствует себя отлично 😄`;
     }
 
-    // Случайные события
-    function randomEvent(){
-      if(state.gameOver || !state.started) return;
+    function startTaskTimer() {
+      taskTimeLeft = 10;
+      timerLabel.textContent = `⏱ ${taskTimeLeft} сек`;
+      if (taskTimerInterval) clearInterval(taskTimerInterval);
+      taskTimerInterval = setInterval(() => {
+        taskTimeLeft -= 1;
+        timerLabel.textContent = `⏱ ${taskTimeLeft} сек`;
+        if (taskTimeLeft <= 0) {
+          clearInterval(taskTimerInterval);
+          handleTaskFail('timeout');
+        }
+      }, 1000);
+    }
 
+    function stopTaskTimer() {
+      if (taskTimerInterval) clearInterval(taskTimerInterval);
+      taskTimerInterval = null;
+      timerLabel.textContent = '';
+    }
+
+    function randomEvent() {
+      if (state.gameOver || !state.started || state.activeTask) return;
       const r = Math.random();
-
-      if(r < 0.3){
+      if (r < 0.18) {
         state.happiness = clamp(state.happiness + 10);
-        updateFeedback('Питомец нашёл яблоко 🍎 +10 счастья','good');
-      }
-      else if(r < 0.6){
+        updateFeedback('Питомец нашёл яблоко 🍎 +10 счастья', 'good');
+        animatePet();
+      } else if (r < 0.32) {
         state.hygiene = clamp(state.hygiene - 15);
-        updateFeedback('Питомец испачкался в луже 💧 -15 гигиены','warn');
+        updateFeedback('Питомец испачкался в луже 💧 -15 гигиены', 'warn');
       }
+      updateUI();
+      checkGameState();
     }
 
     setInterval(randomEvent, 45000);
 
-    // Эволюция питомца
-    function updateEvolution(){
-      if(state.level === 2) document.documentElement.style.setProperty('--pet-color','#fbbf24');
-      if(state.level === 3) document.documentElement.style.setProperty('--pet-color','#34d399');
-      if(state.level === 4) document.documentElement.style.setProperty('--pet-color','#60a5fa');
-      if(state.level === 5) document.documentElement.style.setProperty('--pet-color','#f472b6');
+    function updateEvolution() {
+      const colors = { 1: '#f59e0b', 2: '#fbbf24', 3: '#34d399', 4: '#60a5fa', 5: '#f472b6' };
+      document.documentElement.style.setProperty('--pet-color', colors[state.level] || GAME_CONFIG.petSkins[state.petType].color);
+      els.pet.style.transform = `scale(${1 + (state.level - 1) * 0.06})`;
+      let accessory = document.getElementById('petAccessory');
+      if (!accessory) {
+        accessory = document.createElement('div');
+        accessory.id = 'petAccessory';
+        accessory.style.position = 'absolute';
+        accessory.style.top = '14px';
+        accessory.style.left = '50%';
+        accessory.style.transform = 'translateX(-50%)';
+        accessory.style.fontSize = '28px';
+        els.pet.appendChild(accessory);
+      }
+      accessory.textContent = state.level >= 5 ? '👑' : state.level === 4 ? '🎀' : state.level === 3 ? '⭐' : state.level === 2 ? '🧢' : '';
     }
 
-    // Переопределяем gainXp чтобы добавить эволюцию
+    function saveGame() {
+      const payload = {
+        state: JSON.parse(JSON.stringify(state)),
+        config: getSerializableConfig()
+      };
+      localStorage.setItem(SAVE_KEY, JSON.stringify(payload));
+      updateFeedback('Игра сохранена.', 'good');
+    }
+
+    function loadGame() {
+      const raw = localStorage.getItem(SAVE_KEY);
+      if (!raw) {
+        updateFeedback('Сохранение не найдено.', 'warn');
+        return;
+      }
+      const payload = JSON.parse(raw);
+      applyConfigPatch(GAME_CONFIG, payload.config || {});
+      Object.assign(state, payload.state || {});
+      state.activeTask = null;
+      state.gameOver = false;
+      applyPetSkin();
+      updateEvolution();
+      updateUI();
+      setScreen('gameScreen');
+      updateFeedback('Сохранение загружено.', 'good');
+      clearIntervals();
+      decayInterval = setInterval(applyPassiveDecay, GAME_CONFIG.time.tickMs);
+      timerInterval = setInterval(() => {
+        state.elapsedSec += 1;
+        els.timeLabel.textContent = formatTime(state.elapsedSec);
+      }, GAME_CONFIG.time.sessionTimerMs);
+    }
+
+    function clearSave() {
+      localStorage.removeItem(SAVE_KEY);
+      updateFeedback('Сохранение удалено.', 'warn');
+    }
+
+    function getScenePetHtml() {
+      return `
+        <div class="pet ${state.petType}" style="width:150px;height:150px;">
+          <div class="ear left"></div>
+          <div class="ear right"></div>
+          <div class="pet-body">
+            <div class="eye left"></div>
+            <div class="eye right"></div>
+            <div class="mouth"></div>
+            <div class="cheek left"></div>
+            <div class="cheek right"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function getSceneDecor(actionKey) {
+      if (actionKey === 'feed') {
+        return `
+          <div class="prop cardlike" style="left:8%;top:18%;font-size:30px;">🪟</div>
+          <div class="prop cardlike" style="right:8%;top:16%;font-size:34px;">🧁</div>
+          <div class="prop" style="left:18%;bottom:92px;width:64%;height:18px;background:#8b5e3c;border-radius:999px;"></div>
+          <div class="prop big" style="left:50%;bottom:106px;transform:translateX(-50%);">🍽️</div>
+          <div class="prop medium" style="right:14%;bottom:110px;">🥛</div>
+          <div class="prop medium" style="left:14%;bottom:108px;">🍞</div>
+        `;
+      }
+      if (actionKey === 'walk') {
+        return `
+          <div class="prop big" style="left:8%;bottom:110px;">🌳</div>
+          <div class="prop medium" style="right:10%;bottom:120px;">☀️</div>
+          <div class="prop medium" style="right:18%;bottom:92px;">🌼</div>
+          <div class="prop medium" style="left:22%;bottom:86px;">⚽</div>
+          <div class="prop small" style="left:42%;top:26px;">☁️</div>
+          <div class="prop small" style="right:32%;top:40px;">☁️</div>
+        `;
+      }
+      if (actionKey === 'toilet') {
+        return `
+          <div class="prop cardlike" style="left:8%;top:18%;font-size:30px;">🪞</div>
+          <div class="prop big" style="right:12%;bottom:104px;">🛁</div>
+          <div class="prop medium" style="left:16%;bottom:96px;">🧴</div>
+          <div class="prop medium" style="left:32%;bottom:102px;">🫧</div>
+          <div class="prop medium" style="right:30%;bottom:92px;">🚿</div>
+        `;
+      }
+      return `
+        <div class="prop small" style="left:12%;top:26px;">⭐</div>
+        <div class="prop small" style="right:14%;top:30px;">🌟</div>
+        <div class="prop big" style="left:50%;bottom:92px;transform:translateX(-50%);">🛏️</div>
+        <div class="prop medium" style="left:18%;bottom:96px;">🧸</div>
+        <div class="prop medium" style="right:18%;bottom:98px;">🌙</div>
+      `;
+    }
+
+    function getScenePetClass(actionKey) {
+      if (actionKey === 'feed') return 'pet eating';
+      if (actionKey === 'walk') return 'pet walking';
+      if (actionKey === 'toilet') return 'pet washing';
+      if (actionKey === 'sleep') return 'pet sleeping';
+      return 'pet';
+    }
+
+    function openScene(actionKey) {
+      const scene = GAME_CONFIG.scenes[actionKey];
+      if (!scene) return;
+      sceneEls.stage.classList.add('active');
+      sceneEls.bg.style.background = GAME_CONFIG.scenes.meta.backgrounds[actionKey] || 'linear-gradient(180deg,#f9fafb,#eef2ff)';
+      sceneEls.title.textContent = `${scene.emoji} ${scene.title}`;
+      sceneEls.subtitle.textContent = scene.subtitle;
+      sceneEls.layer.innerHTML = getSceneDecor(actionKey);
+      sceneEls.pet.innerHTML = getScenePetHtml();
+      const miniPet = sceneEls.pet.querySelector('.pet');
+      if (miniPet) {
+        miniPet.className = `${getScenePetClass(actionKey)} ${state.petType}`;
+      }
+      sceneEls.options.innerHTML = '';
+      scene.options.forEach((option) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'scene-option-btn';
+        btn.innerHTML = `
+          <div class="option-top"><strong>${option.label}</strong><span style="font-size:28px;">${option.emoji}</span></div>
+          <small>Выбери вариант, потом реши пример</small>
+        `;
+        btn.addEventListener('click', () => startActionTask(actionKey, option));
+        sceneEls.options.appendChild(btn);
+      });
+      updateFeedback(`Открыта сцена «${scene.title}». Выбери вариант действия.`, 'warn');
+    }
+
+    function closeScene() {
+      sceneEls.stage.classList.remove('active');
+      sceneEls.layer.innerHTML = '';
+      sceneEls.pet.innerHTML = '';
+      sceneEls.options.innerHTML = '';
+    }
+
+    function startActionTask(actionKey, option) {
+      closeScene();
+      const task = generateTask(actionKey);
+      task.selectedOption = option;
+      renderTask(task);
+      taskMeta.textContent = `Выбрано: ${option.emoji} ${option.label}`;
+      updateFeedback(`Чтобы выполнить действие «${GAME_CONFIG.actions[actionKey].label}», реши задание.`, 'warn');
+    }
+
+    function applyOptionBonus(task) {
+      if (!task?.selectedOption?.bonus) return;
+      applyDeltaSet(task.selectedOption.bonus);
+    }
+
+    function explainCorrectAnswer(task) {
+      if (!task) return '';
+      const q = task.question.replace('= ?', '').trim();
+      return q ? ` ${q} = ${task.answer}.` : ` Правильный ответ: ${task.answer}.`;
+    }
+
+    const originalStartGame = startGame;
+    startGame = function () {
+      originalStartGame();
+      updateEvolution();
+      updateMoodText();
+    };
+
+    const originalResetGame = resetGame;
+    resetGame = function () {
+      originalResetGame();
+      stopTaskTimer();
+      closeScene();
+      taskMeta.textContent = '';
+      moodLabel.textContent = '';
+      const accessory = document.getElementById('petAccessory');
+      if (accessory) accessory.textContent = '';
+      els.pet.style.transform = '';
+    };
+
     const originalGainXp = gainXp;
-    gainXp = function(amount){
+    gainXp = function (amount) {
       originalGainXp(amount);
       updateEvolution();
-    }
+    };
 
-    // Объяснение ошибки
-    const originalHandleFail = handleTaskFail;
-    handleTaskFail = function(){
-      const correct = state.activeTask?.answer;
-      originalHandleFail();
-      if(correct) updateFeedback(`Неверно. Правильный ответ: ${correct}`, 'bad');
-    }
-
-    // Перехватываем рендер задания чтобы запускать таймер
     const originalRenderTask = renderTask;
-    renderTask = function(task){
+    renderTask = function (task) {
       originalRenderTask(task);
+      taskMeta.textContent = task.selectedOption ? `Выбрано: ${task.selectedOption.emoji} ${task.selectedOption.label}` : '';
       startTaskTimer();
-    }
+    };
 
-    // Добавим обновление текста настроения в основной UI
+    const originalCloseTask = closeTask;
+    closeTask = function () {
+      stopTaskTimer();
+      taskMeta.textContent = '';
+      originalCloseTask();
+    };
+
+    const originalHandleTaskSuccess = handleTaskSuccess;
+    handleTaskSuccess = function () {
+      const task = state.activeTask ? JSON.parse(JSON.stringify(state.activeTask)) : null;
+      originalHandleTaskSuccess();
+      applyOptionBonus(task);
+      if (task?.selectedOption) {
+        updateFeedback(`Отлично! ${state.petName} выполнил действие «${task.selectedOption.label}» и радуется.`, 'good');
+      }
+      updateUI();
+      checkGameState();
+    };
+
+    const originalHandleTaskFail = handleTaskFail;
+    handleTaskFail = function (reason = 'wrong') {
+      const task = state.activeTask ? JSON.parse(JSON.stringify(state.activeTask)) : null;
+      originalHandleTaskFail();
+      if (task) {
+        const prefix = reason === 'timeout' ? 'Время вышло.' : 'Неверно.';
+        updateFeedback(`${prefix}${explainCorrectAnswer(task)}`, 'bad');
+      }
+      updateUI();
+    };
+
     const originalUpdateUI = updateUI;
-    updateUI = function(){
+    updateUI = function () {
       originalUpdateUI();
       updateMoodText();
-    }
+      updateEvolution();
+    };
 
+    document.querySelectorAll('[data-action]').forEach((oldBtn) => {
+      const clone = oldBtn.cloneNode(true);
+      oldBtn.replaceWith(clone);
+      clone.addEventListener('click', () => {
+        if (state.gameOver || state.activeTask) return;
+        openScene(clone.dataset.action);
+      });
+    });
+
+        saveBar.querySelector('#saveGameBtn').addEventListener('click', saveGame);
+    saveBar.querySelector('#loadGameBtn').addEventListener('click', loadGame);
+    saveBar.querySelector('#clearSaveBtn').addEventListener('click', clearSave);
 
     // --- Подготовка к редактору / интеграции в Genially ---
 
@@ -1305,7 +1543,69 @@
     function importConfigJson(jsonText) {
       const parsed = JSON.parse(jsonText);
       applyConfigPatch(GAME_CONFIG, parsed);
-      els.petNameInput.value = GAME_CONFIG.meta.defaultPetName;
+          // --- Исправление переходов между комнатами ---
+    const mainPetStage = document.querySelector('.pet-stage');
+
+    function showMainStage() {
+      if (mainPetStage) mainPetStage.style.display = 'grid';
+      if (sceneEls?.stage) sceneEls.stage.classList.remove('active');
+    }
+
+    function showSceneStage() {
+      if (mainPetStage) mainPetStage.style.display = 'none';
+      if (sceneEls?.stage) sceneEls.stage.classList.add('active');
+    }
+
+    const originalOpenSceneSafe = typeof openScene === 'function' ? openScene : null;
+    if (originalOpenSceneSafe) {
+      openScene = function(actionKey) {
+        showSceneStage();
+        originalOpenSceneSafe(actionKey);
+      };
+    }
+
+    const originalCloseSceneSafe = typeof closeScene === 'function' ? closeScene : null;
+    if (originalCloseSceneSafe) {
+      closeScene = function() {
+        originalCloseSceneSafe();
+        showMainStage();
+      };
+    }
+
+    const originalStartActionTaskSafe = typeof startActionTask === 'function' ? startActionTask : null;
+    if (originalStartActionTaskSafe) {
+      startActionTask = function(actionKey, option) {
+        originalStartActionTaskSafe(actionKey, option);
+        showMainStage();
+      };
+    }
+
+    const originalResetGameSafe = typeof resetGame === 'function' ? resetGame : null;
+    if (originalResetGameSafe) {
+      resetGame = function() {
+        originalResetGameSafe();
+        showMainStage();
+      };
+    }
+
+    // Надёжный перехват кликов по кнопкам действий.
+    // Используем capture-фазу, чтобы старые обработчики не запускали задание напрямую.
+    document.addEventListener('click', function(event) {
+      const btn = event.target.closest('[data-action]');
+      if (!btn) return;
+      event.preventDefault();
+      event.stopPropagation();
+      if (typeof event.stopImmediatePropagation === 'function') event.stopImmediatePropagation();
+      if (state.gameOver || state.activeTask) return;
+      if (typeof openScene === 'function') {
+        openScene(btn.dataset.action);
+      }
+    }, true);
+
+    // На старте всегда показываем главную сцену.
+    showMainStage();
+
+    els.petNameInput.value = GAME_CONFIG.meta.defaultPetName;
       updateFeedback('Конфигурация обновлена.', 'good');
     }
 
