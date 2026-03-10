@@ -18,9 +18,8 @@
       --shadow: 0 14px 30px rgba(0,0,0,.10);
       --radius: 24px;
       --pet-color: #d18b2c;
-      --ui-green: #c9ff45;
-      --ui-green-dark: #91c71a;
     }
+
     * { box-sizing: border-box; }
     body {
       margin: 0;
@@ -28,6 +27,7 @@
       background: linear-gradient(180deg, #f4efe7 0%, #efe9ff 100%);
       color: var(--text);
     }
+
     .wrap { max-width: 1320px; margin: 0 auto; padding: 16px; display: grid; gap: 16px; }
     .screen { display: none; gap: 16px; }
     .screen.active { display: grid; }
@@ -38,7 +38,7 @@
     @media (max-width: 1020px) { .grid-2 { grid-template-columns: 1fr; } }
     label { display: block; font-weight: 700; margin-bottom: 8px; }
     input, select, button { font: inherit; }
-    input[type="text"], input[type="number"], select {
+    input[type="text"], select {
       width: 100%; padding: 12px 14px; border: 1px solid #ddd6fe; border-radius: 14px; outline: none; background: #fff;
     }
     button {
@@ -48,7 +48,6 @@
     button:hover { transform: translateY(-1px); }
     button:disabled { opacity: .55; cursor: not-allowed; transform: none; }
     .secondary { background: #ede9fe; color: #4c1d95; }
-    .danger { background: #fee2e2; color: #991b1b; }
     .topline { display:flex; justify-content:space-between; gap:20px; align-items:flex-start; flex-wrap:wrap; }
     .pill { background:#f3f4f6; border-radius:999px; padding:6px 10px; font-size:14px; }
     .row { display:flex; gap:12px; flex-wrap:wrap; }
@@ -59,21 +58,19 @@
       min-height: 670px;
       border-radius: 30px;
       overflow: hidden;
-      background: linear-gradient(180deg, #b8ef7d 0%, #d4f5a5 42%, #c9994e 42%, #8e5f2d 100%);
       box-shadow: inset 0 0 0 2px rgba(255,255,255,.35);
+      background: linear-gradient(180deg, #b8ef7d 0%, #d4f5a5 42%, #c9994e 42%, #8e5f2d 100%);
     }
     .room-wallpaper {
       position:absolute; inset:0 0 42% 0;
-      background:
-        radial-gradient(rgba(214,171,31,.55) 20%, transparent 22%) 0 0/90px 90px,
-        linear-gradient(180deg, #b7e86b, #ccee84);
+      background: radial-gradient(rgba(214,171,31,.55) 20%, transparent 22%) 0 0/90px 90px, linear-gradient(180deg, #b7e86b, #ccee84);
       opacity:.9;
+      transition: background .25s ease;
     }
     .room-floor {
       position:absolute; left:0; right:0; bottom:0; height:42%;
-      background:
-        repeating-linear-gradient(90deg, #835526 0 70px, #8f5f2d 70px 74px),
-        linear-gradient(180deg, #9c6a32, #6f451e);
+      background: repeating-linear-gradient(90deg, #835526 0 70px, #8f5f2d 70px 74px), linear-gradient(180deg, #9c6a32, #6f451e);
+      transition: background .25s ease;
     }
     .room-rug {
       position:absolute; left:50%; bottom:88px; width:440px; height:170px; transform:translateX(-50%);
@@ -84,22 +81,23 @@
       position:absolute; right:150px; top:86px; width:190px; height:190px; background:#dff5ff; border:10px solid #e8e0f0; border-radius:8px;
       box-shadow: inset 0 0 0 4px #bcb0d8;
     }
-    .window::before { content:''; position:absolute; inset:0 0 50% 0; background: repeating-linear-gradient(90deg,#f5c400 0 14px,#f7df55 14px 28px); opacity:.7; }
+    .window::before {
+      content:''; position:absolute; inset:0 0 50% 0;
+      background: repeating-linear-gradient(90deg,#f5c400 0 14px,#f7df55 14px 28px); opacity:.7;
+    }
     .fridge {
       position:absolute; left:38px; top:78px; width:170px; height:320px; border-radius:28px 28px 16px 16px;
       background: linear-gradient(180deg, #f4be17, #e29f04);
       box-shadow: inset -12px 0 0 rgba(255,255,255,.2), inset 0 -12px 0 rgba(0,0,0,.08);
     }
     .fridge::before, .fridge::after {
-      content:''; position:absolute; left:28px; right:22px; height:8px; background:#dadada; border-radius:999px;
-      box-shadow:0 3px 0 rgba(0,0,0,.12);
+      content:''; position:absolute; left:28px; right:22px; height:8px; background:#dadada; border-radius:999px; box-shadow:0 3px 0 rgba(0,0,0,.12);
     }
     .fridge::before { top:130px; }
     .fridge::after { top:200px; }
     .handle { position:absolute; width:12px; height:76px; background:#bcbcbc; border-radius:999px; right:22px; }
     .handle.top { top:60px; }
     .handle.bottom { top:212px; }
-
     .counter-left, .counter-right {
       position:absolute; bottom:120px; width:120px; height:200px; background: linear-gradient(180deg,#f7f3f8,#ddd1ea); border-radius:16px 16px 0 0;
       box-shadow: inset 0 8px 0 rgba(255,255,255,.35);
@@ -109,43 +107,58 @@
     .counter-left::before, .counter-right::before {
       content:''; position:absolute; left:0; right:0; top:-16px; height:20px; background:#fff9f4; border-radius:8px;
     }
-
     .table-main {
-      position:absolute; left:50%; bottom:110px; transform:translateX(-50%); width:640px; height:210px;
+      position:absolute; left:50%; bottom:88px; transform:translateX(-50%); width:640px; height:210px;
       background: linear-gradient(180deg,#f0c21d,#b38b05); border-radius:18px 18px 12px 12px; box-shadow: inset 0 0 0 6px rgba(255,255,255,.08);
+      z-index: 6;
     }
     .tablecloth {
       position:absolute; inset:0; border-radius:18px 18px 12px 12px;
-      background:
-        linear-gradient(rgba(255,225,80,.22), rgba(255,225,80,.22)),
-        repeating-linear-gradient(90deg, rgba(255,255,255,.08) 0 32px, transparent 32px 64px),
-        repeating-linear-gradient(0deg, rgba(255,255,255,.08) 0 32px, transparent 32px 64px);
+      background: linear-gradient(rgba(255,225,80,.22), rgba(255,225,80,.22)), repeating-linear-gradient(90deg, rgba(255,255,255,.08) 0 32px, transparent 32px 64px), repeating-linear-gradient(0deg, rgba(255,255,255,.08) 0 32px, transparent 32px 64px);
+    }
+
+    .room-top-badge {
+      position:absolute; top:18px; left:18px; width:112px; height:112px; border-radius:50%; background:rgba(0,0,0,.68); display:grid; place-items:center; z-index:10;
+      box-shadow: 0 4px 16px rgba(0,0,0,.26);
+    }
+    .room-top-badge span {
+      width:82px; height:82px; border-radius:50%; background:#fff; border:5px solid #222; display:grid; place-items:center; font-size:52px; font-weight:900; color:#8b5cf6;
+    }
+    .status-overlay {
+      position:absolute; top:18px; right:18px; display:flex; gap:10px; z-index:10; flex-wrap:wrap; justify-content:flex-end; max-width:360px;
+    }
+    .status-chip {
+      background:rgba(255,255,255,.9); padding:8px 12px; border-radius:999px; font-weight:800; box-shadow:var(--shadow);
+    }
+    .inline-room-label {
+      position:absolute; top:18px; left:146px; z-index:10; background:rgba(255,255,255,.92); border-radius:999px; padding:10px 16px; font-weight:800; box-shadow:var(--shadow);
+    }
+    .inline-room-subtitle {
+      position:absolute; top:70px; left:146px; z-index:10; background:rgba(255,255,255,.86); border-radius:18px; padding:12px 16px; color:var(--muted); max-width:340px; box-shadow:var(--shadow);
+    }
+    .mood-banner {
+      position:absolute; left:50%; transform:translateX(-50%); bottom:310px; z-index:10; background:rgba(255,255,255,.9); padding:10px 16px; border-radius:999px; font-weight:800; box-shadow:var(--shadow);
     }
 
     .room-pet-wrap {
-      position:absolute; left:50%; bottom:220px; transform:translateX(-50%); z-index:3; width:260px; height:250px;
-      display:grid; place-items:center;
+      position:absolute; left:50%; bottom:170px; transform:translateX(-50%); z-index:5; width:260px; height:260px; display:grid; place-items:center;
+      transition: all .25s ease;
     }
-    .dogpet {
-      width:220px; height:220px; position:relative; transition:transform .25s ease;
-    }
+    .dogpet { width:220px; height:220px; position:relative; transition:transform .25s ease; }
     .dogpet.bounce { animation:bounce .6s ease; }
     .dogpet.sleeping { animation:sleepFloat 2.2s ease-in-out infinite; }
     .dogpet.eating { animation:nibble .9s ease-in-out infinite; }
     .dogpet.walking { animation:sideWalk 1s ease-in-out infinite; }
     .dogpet.washing { animation:wobble 1.2s ease-in-out infinite; }
     .dog-head {
-      position:absolute; inset:0; background: linear-gradient(180deg, #d69635, #ba7923); border-radius:44% 44% 48% 48% / 42% 42% 58% 58%;
-      box-shadow: inset 0 -12px 0 rgba(0,0,0,.08);
+      position:absolute; inset:0; background: linear-gradient(180deg, #d69635, #ba7923); border-radius:44% 44% 48% 48% / 42% 42% 58% 58%; box-shadow: inset 0 -12px 0 rgba(0,0,0,.08);
     }
     .dog-ear {
       position:absolute; top:6px; width:72px; height:110px; background: linear-gradient(180deg,#7e5031,#5d341d); border-radius:50px 50px 18px 18px;
     }
     .dog-ear.left { left:10px; transform:rotate(-26deg); }
     .dog-ear.right { right:10px; transform:rotate(26deg); }
-    .dog-eye {
-      position:absolute; top:92px; width:22px; height:30px; background:#111827; border-radius:50%;
-    }
+    .dog-eye { position:absolute; top:92px; width:22px; height:30px; background:#111827; border-radius:50%; }
     .dog-eye.left { left:68px; }
     .dog-eye.right { right:68px; }
     .dog-eye.closed { height:5px; top:104px; border-radius:999px; }
@@ -161,37 +174,28 @@
     .dog-mouth.sad { border-bottom:none; border-top:5px solid #2b1b16; border-radius:30px 30px 0 0; top:44px; }
     .dog-mouth.flat { border:none; border-top:5px solid #2b1b16; width:34px; top:44px; border-radius:999px; height:0; }
     .dog-cheek { position:absolute; top:144px; width:20px; height:12px; background:rgba(255,255,255,.25); border-radius:999px; }
-    .dog-cheek.left { left:42px; } .dog-cheek.right { right:42px; }
+    .dog-cheek.left { left:42px; }
+    .dog-cheek.right { right:42px; }
     .dog-paw { position:absolute; bottom:-6px; width:52px; height:42px; background:#c8862a; border-radius:24px; }
-    .dog-paw.left { left:54px; } .dog-paw.right { right:54px; }
+    .dog-paw.left { left:54px; }
+    .dog-paw.right { right:54px; }
 
-    .pet-stage { display:none !important; }
-    .scene-stage { display:none !important; }
-
+    .room-items { position:absolute; inset:0; z-index:8; }
     .food-slot {
-      position:absolute; z-index:4; width:132px; height:132px; display:grid; place-items:center; cursor:pointer;
-      transition: transform .15s ease;
+      position:absolute; z-index:8; width:132px; height:132px; display:grid; place-items:center; cursor:pointer; transition: transform .15s ease;
+      background: transparent; border: none; padding: 0;
     }
     .food-slot:hover { transform: translateY(-6px) scale(1.03); }
     .plate {
-      position:absolute; bottom:6px; width:124px; height:28px; background:#f9f9f9; border-radius:50%; box-shadow: inset 0 -4px 0 rgba(0,0,0,.08);
+      position:absolute; bottom:10px; width:124px; height:28px; background:#f9f9f9; border-radius:50%; box-shadow: inset 0 -4px 0 rgba(0,0,0,.08);
     }
     .food-item { position:relative; font-size:74px; z-index:2; }
     .food-badge {
-      position:absolute; bottom:-8px; left:50%; transform:translateX(-50%); min-width:48px; height:48px; border-radius:20px;
-      display:grid; place-items:center; background:#fff; border:4px solid #111; font-weight:900; font-size:24px;
-    }
-
-    .room-top-badge {
-      position:absolute; top:18px; left:18px; width:112px; height:112px; border-radius:50%; background:rgba(0,0,0,.68); display:grid; place-items:center; z-index:5;
-      box-shadow: 0 4px 16px rgba(0,0,0,.26);
-    }
-    .room-top-badge span {
-      width:82px; height:82px; border-radius:50%; background:#fff; border:5px solid #222; display:grid; place-items:center; font-size:52px; font-weight:900; color:#8b5cf6;
+      position:absolute; bottom:-4px; left:50%; transform:translateX(-50%); min-width:48px; height:48px; border-radius:20px; display:grid; place-items:center; background:#fff; border:4px solid #111; font-weight:900; font-size:24px;
     }
 
     .bottom-nav {
-      position:absolute; left:24px; right:24px; bottom:14px; display:flex; justify-content:space-between; align-items:flex-end; gap:10px; z-index:6;
+      position:absolute; left:24px; right:24px; bottom:14px; display:flex; justify-content:space-between; align-items:flex-end; gap:10px; z-index:12;
     }
     .nav-left-coins {
       width:118px; height:86px; border-radius:30px; background:#fff; border:5px solid #111; display:flex; flex-direction:column; justify-content:center; align-items:center; font-weight:900; position:relative;
@@ -200,8 +204,7 @@
       position:absolute; right:-6px; top:40px; width:34px; height:34px; border-radius:50%; background:#ef4444; color:#fff; display:grid; place-items:center; border:3px solid #fff; font-size:18px;
     }
     .nav-pill {
-      width:124px; height:124px; border-radius:50%; background: radial-gradient(circle at top, #f8fff3, #e8e8e8 35%, #d3d3d3 35%, #fff 36%);
-      border:6px solid #111; display:grid; place-items:center; cursor:pointer; position:relative; box-shadow:0 10px 18px rgba(0,0,0,.16);
+      width:124px; height:124px; border-radius:50%; background: radial-gradient(circle at top, #f8fff3, #e8e8e8 35%, #d3d3d3 35%, #fff 36%); border:6px solid #111; display:grid; place-items:center; cursor:pointer; position:relative; box-shadow:0 10px 18px rgba(0,0,0,.16);
     }
     .nav-pill.active::after {
       content:''; position:absolute; inset:-10px; border-radius:50%; box-shadow:0 0 24px rgba(255,255,255,.95);
@@ -210,22 +213,11 @@
       width:96px; height:96px; border-radius:50%; background: linear-gradient(180deg, #d8ff59, #bff032); display:grid; place-items:center; font-size:46px;
     }
 
-    .status-overlay {
-      position:absolute; top:18px; right:18px; display:flex; gap:10px; z-index:5; flex-wrap:wrap; justify-content:flex-end; max-width:360px;
-    }
-    .status-chip {
-      background:rgba(255,255,255,.9); padding:8px 12px; border-radius:999px; font-weight:800; box-shadow:var(--shadow);
-    }
-    .mood-banner {
-      position:absolute; left:50%; transform:translateX(-50%); bottom:330px; z-index:5; background:rgba(255,255,255,.88); padding:10px 16px; border-radius:999px; font-weight:800; box-shadow:var(--shadow);
-    }
-
-    .side-panel {
-      display:flex; flex-direction:column; gap:14px; min-height:670px;
-    }
+    .side-panel { display:flex; flex-direction:column; gap:14px; min-height:670px; }
     .compact-actions { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
     .action-btn { display:flex; align-items:center; justify-content:space-between; gap:10px; text-align:left; background:#fff; color:var(--text); border:1px solid #ede9fe; }
-    .action-btn strong { display:block; } .action-btn small { color:var(--muted); }
+    .action-btn strong { display:block; }
+    .action-btn small { color:var(--muted); }
     .feedback { min-height:64px; padding:14px 16px; border-radius:16px; background:#f8fafc; color:#334155; font-size:18px; }
     .feedback.good { background:#dcfce7; color:#166534; }
     .feedback.bad { background:#fee2e2; color:#991b1b; }
@@ -273,10 +265,8 @@
         <div class="row" style="margin-top: 14px;">
           <div style="flex:1 1 220px;">
             <label for="petType">Вид питомца</label>
-            <select id="petType">
-              <option value="dog">Собака</option>
-              <option value="cat">Кошка</option>
-              <option value="rabbit">Кролик</option>
+            <select id="petType" disabled>
+              <option value="dog" selected>Собака</option>
             </select>
           </div>
           <div style="flex:1 1 220px;">
@@ -326,19 +316,20 @@
             <div class="window"></div>
             <div class="counter-left"></div>
             <div class="counter-right"></div>
-            <div class="table-main"><div class="tablecloth"></div></div>
             <div class="room-rug"></div>
+            <div class="table-main"><div class="tablecloth"></div></div>
 
             <div class="room-top-badge"><span id="attemptBadge">1</span></div>
-
             <div class="status-overlay">
               <div class="status-chip" id="levelBadge">Уровень 1</div>
               <div class="status-chip">XP: <span id="xpValue">0</span>/<span id="xpMaxValue">100</span></div>
             </div>
 
+            <div id="roomLabel" class="inline-room-label">🍽️ Кухня</div>
+            <div id="roomSubtitle" class="inline-room-subtitle">Питомец за столом. Выбери, чем его кормить.</div>
             <div id="moodBanner" class="mood-banner">Питомец чувствует себя отлично 😄</div>
 
-            <div class="room-pet-wrap">
+            <div id="roomPetWrap" class="room-pet-wrap">
               <div id="petDog" class="dogpet">
                 <div class="dog-ear left"></div>
                 <div class="dog-ear right"></div>
@@ -356,11 +347,11 @@
               </div>
             </div>
 
-            <div id="roomItems"></div>
+            <div id="roomItems" class="room-items"></div>
 
             <div class="bottom-nav">
               <div class="nav-left-coins">800 🪙<div class="mini-badge">2</div></div>
-              <div class="nav-pill" data-nav="play"><div class="nav-inner">😀</div></div>
+              <div class="nav-pill" data-nav="walk"><div class="nav-inner">😀</div></div>
               <div class="nav-pill active" data-nav="feed"><div class="nav-inner">🍽️</div></div>
               <div class="nav-pill" data-nav="toilet"><div class="nav-inner">🚿</div></div>
               <div class="nav-pill" data-nav="sleep"><div class="nav-inner">🌙</div></div>
@@ -443,9 +434,6 @@
 
   <script>
     const GAME_CONFIG = {
-      roomView: {
-        default: 'feed'
-      },
       meta: {
         title: 'Тамагочи',
         maxLevel: 5,
@@ -457,16 +445,23 @@
           'Верно! Это пошло на пользу.',
           'Супер! Питомец радуется.'
         ],
-        negativeMessages: [
-          'Увы, ответ неверный. Питомец расстроился.',
-          'Пока не получилось. Попробуй ещё в следующий раз.',
-          'Ошибка. Питомец немного загрустил.'
-        ],
         statusWarnings: {
           hunger: 'Твой питомец очень голоден!',
           happiness: 'Питомец грустит и нуждается в заботе.',
           energy: 'Питомец устал и хочет отдохнуть.',
           hygiene: 'Питомцу срочно нужна гигиена.'
+        },
+        roomLabels: {
+          feed: '🍽️ Кухня',
+          walk: '🌳 Прогулка',
+          toilet: '🛁 Ванная',
+          sleep: '🌙 Спальня'
+        },
+        roomSubtitles: {
+          feed: 'Питомец за столом. Выбери, чем его кормить.',
+          walk: 'Собака гуляет. Нажми на предмет в сцене.',
+          toilet: 'Пора привести питомца в порядок.',
+          sleep: 'Питомец готовится ко сну.'
         }
       },
       limits: {
@@ -486,6 +481,7 @@
       time: {
         tickMs: 5000,
         sessionTimerMs: 1000,
+        taskSeconds: 10,
         speedMultiplier: {
           slow: 0.7,
           normal: 1,
@@ -533,9 +529,6 @@
       petSkins: {
         dog: { label: 'Собака', color: '#d18b2c' }
       },
-        cat: { label: 'Кошка', color: '#fb7185' },
-        rabbit: { label: 'Кролик', color: '#a78bfa' }
-      },
       actions: {
         feed: {
           label: 'Кормление',
@@ -572,24 +565,24 @@
       ],
       rooms: {
         feed: [
-          { id: 'fries', label: 'Картошка', emoji: '🍟', badge: '3', x: 150, y: 435, bonus: { happiness: 2 } },
-          { id: 'strawberry', label: 'Клубника', emoji: '🍓', badge: '3', x: 290, y: 435, bonus: { hunger: -2, happiness: 1 } },
-          { id: 'plate', label: 'Тарелка', emoji: '🍽️', badge: '1', x: 430, y: 435, bonus: { happiness: 1 } }
+          { id: 'apple', label: 'Яблоко', emoji: '🍎', badge: '3', x: 160, y: 368, bonus: { hunger: -2, happiness: 1 } },
+          { id: 'porridge', label: 'Каша', emoji: '🥣', badge: '2', x: 320, y: 368, bonus: { hunger: -2 } },
+          { id: 'carrot', label: 'Морковка', emoji: '🥕', badge: '1', x: 480, y: 368, bonus: { hygiene: 1 } }
         ],
         walk: [
-          { id: 'ball', label: 'Мяч', emoji: '⚽', badge: '2', x: 180, y: 430, bonus: { happiness: 3 } },
-          { id: 'tree', label: 'Дерево', emoji: '🌳', badge: '1', x: 320, y: 430, bonus: { energy: 1 } },
-          { id: 'flower', label: 'Цветок', emoji: '🌼', badge: '2', x: 460, y: 430, bonus: { happiness: 2 } }
+          { id: 'ball', label: 'Мяч', emoji: '⚽', badge: '2', x: 160, y: 390, bonus: { happiness: 3 } },
+          { id: 'tree', label: 'Дерево', emoji: '🌳', badge: '1', x: 320, y: 350, bonus: { energy: 1 } },
+          { id: 'flower', label: 'Цветок', emoji: '🌼', badge: '2', x: 500, y: 390, bonus: { happiness: 2 } }
         ],
         toilet: [
-          { id: 'soap', label: 'Мыло', emoji: '🧼', badge: '2', x: 160, y: 430, bonus: { hygiene: 3 } },
-          { id: 'bath', label: 'Ванна', emoji: '🛁', badge: '3', x: 300, y: 430, bonus: { hygiene: 5 } },
-          { id: 'shower', label: 'Душ', emoji: '🚿', badge: '2', x: 440, y: 430, bonus: { hygiene: 4 } }
+          { id: 'soap', label: 'Мыло', emoji: '🧼', badge: '2', x: 170, y: 380, bonus: { hygiene: 3 } },
+          { id: 'bath', label: 'Ванна', emoji: '🛁', badge: '3', x: 330, y: 380, bonus: { hygiene: 5 } },
+          { id: 'shower', label: 'Душ', emoji: '🚿', badge: '2', x: 500, y: 380, bonus: { hygiene: 4 } }
         ],
         sleep: [
-          { id: 'bed', label: 'Кровать', emoji: '🛏️', badge: '3', x: 180, y: 430, bonus: { energy: 4 } },
-          { id: 'toy', label: 'Игрушка', emoji: '🧸', badge: '1', x: 320, y: 430, bonus: { happiness: 2 } },
-          { id: 'moon', label: 'Ночь', emoji: '🌙', badge: '2', x: 460, y: 430, bonus: { energy: 2 } }
+          { id: 'bed', label: 'Кровать', emoji: '🛏️', badge: '3', x: 170, y: 380, bonus: { energy: 4 } },
+          { id: 'toy', label: 'Игрушка', emoji: '🧸', badge: '1', x: 330, y: 380, bonus: { happiness: 2 } },
+          { id: 'moon', label: 'Ночь', emoji: '🌙', badge: '2', x: 500, y: 380, bonus: { energy: 2 } }
         ]
       }
     };
@@ -611,7 +604,6 @@
       totalTasks: 0,
       correctTasks: 0,
       wrongTasks: 0,
-      startTime: null,
       elapsedSec: 0,
       activeTask: null,
       attemptsLeft: 0,
@@ -640,6 +632,7 @@
       xpValue: document.getElementById('xpValue'),
       xpMaxValue: document.getElementById('xpMaxValue'),
       petDog: document.getElementById('petDog'),
+      roomPetWrap: document.getElementById('roomPetWrap'),
       dogEyeLeft: document.getElementById('dogEyeLeft'),
       dogEyeRight: document.getElementById('dogEyeRight'),
       dogMouth: document.getElementById('dogMouth'),
@@ -666,6 +659,8 @@
       endReason: document.getElementById('endReason'),
       endStats: document.getElementById('endStats'),
       moodBanner: document.getElementById('moodBanner'),
+      roomLabel: document.getElementById('roomLabel'),
+      roomSubtitle: document.getElementById('roomSubtitle'),
       roomItems: document.getElementById('roomItems'),
       attemptBadge: document.getElementById('attemptBadge'),
       taskTimerLabel: document.getElementById('taskTimerLabel'),
@@ -674,6 +669,7 @@
 
     let decayInterval = null;
     let timerInterval = null;
+    let taskTimerInterval = null;
 
     function clamp(value) {
       return Math.max(GAME_CONFIG.limits.minStat, Math.min(GAME_CONFIG.limits.maxStat, value));
@@ -723,81 +719,8 @@
       else els.moodBanner.textContent = `${state.petName} чувствует себя отлично 😄`;
     }
 
-    function renderRoomItems() {
-      const items = GAME_CONFIG.rooms[state.currentRoom] || [];
-      els.roomItems.innerHTML = '';
-      items.forEach((item) => {
-        const node = document.createElement('button');
-        node.type = 'button';
-        node.className = 'food-slot';
-        node.style.left = `${item.x}px`;
-        node.style.top = `${item.y}px`;
-        node.innerHTML = `<div class="plate"></div><div class="food-item">${item.emoji}</div><div class="food-badge">${item.badge}</div>`;
-        node.addEventListener('click', () => startActionTask(state.currentRoom, item));
-        els.roomItems.appendChild(node);
-      });
-    }`;
-    }
-
-    function resetGame() {
-      state.currentRoom = 'feed';
-      state.started = false;
-      state.petName = '';
-      state.petType = 'dog';
-      state.difficulty = 'medium';
-      state.speedMode = 'normal';
-      state.level = 1;
-      state.xp = 0;
-      state.xpToNext = getXpTarget(1);
-      state.hunger = 50;
-      state.happiness = 80;
-      state.energy = 80;
-      state.hygiene = 80;
-      state.totalTasks = 0;
-      state.correctTasks = 0;
-      state.wrongTasks = 0;
-      state.startTime = null;
-      state.elapsedSec = 0;
-      state.activeTask = null;
-      state.attemptsLeft = 0;
-      state.gameOver = false;
-      state.endReason = '';
-      clearIntervals();
-      closeTask();
-    }
-
-    function clearIntervals() {
-      if (decayInterval) clearInterval(decayInterval);
-      if (timerInterval) clearInterval(timerInterval);
-    }
-
-    function startGame() {
-      resetGame();
-      state.petName = (els.petNameInput.value || GAME_CONFIG.meta.defaultPetName).trim();
-      state.petType = 'dog';
-      state.difficulty = els.difficultySelect.value;
-      state.speedMode = els.speedModeSelect.value;
-      state.started = true;
-      state.startTime = Date.now();
-      state.xpToNext = getXpTarget(state.level);
-
-      setScreen('gameScreen');
-      applyPetSkin();
-      updateUI();
-      updateFeedback('Игра началась. Выбери действие для питомца.', 'warn');
-
-      decayInterval = setInterval(applyPassiveDecay, GAME_CONFIG.time.tickMs);
-      timerInterval = setInterval(() => {
-        state.elapsedSec += 1;
-        els.timeLabel.textContent = formatTime(state.elapsedSec);
-      }, GAME_CONFIG.time.sessionTimerMs);
-    }
-
     function applyPetSkin() {
-      const skin = GAME_CONFIG.petSkins.dog;
-      document.documentElement.style.setProperty('--pet-color', skin.color);
-    }`;
-      document.documentElement.style.setProperty('--pet-color', skin.color);
+      document.documentElement.style.setProperty('--pet-color', GAME_CONFIG.petSkins.dog.color);
     }
 
     function updateBar(el, value, inverse = false) {
@@ -807,6 +730,16 @@
       if (effective < 30) color = '#dc2626';
       else if (effective < 60) color = '#f59e0b';
       el.style.background = color;
+    }
+
+    function isCriticalState(includeMaxHunger = true) {
+      const critical = GAME_CONFIG.limits.criticalStat;
+      return (
+        state.happiness <= critical ||
+        state.energy <= critical ||
+        state.hygiene <= critical ||
+        (includeMaxHunger && state.hunger >= GAME_CONFIG.limits.maxStat)
+      );
     }
 
     function updateMoodVisual() {
@@ -825,18 +758,135 @@
         els.dogEyeLeft.classList.add('closed');
         els.dogEyeRight.classList.add('closed');
         els.dogMouth.classList.add('flat');
-      } else if (sick) {
-        els.dogMouth.classList.add('sad');
-      } else if (lowMood || state.energy <= GAME_CONFIG.limits.warningStat) {
+      } else if (sick || lowMood || state.energy <= GAME_CONFIG.limits.warningStat) {
         els.dogMouth.classList.add('sad');
       }
-    } else if (sick) {
-        els.pet.classList.add('sick', 'sad');
-        els.mouth.classList.add('sad');
-      } else if (lowMood || state.energy <= GAME_CONFIG.limits.warningStat) {
-        els.pet.classList.add('sad');
-        els.mouth.classList.add('sad');
-      }
+    }
+
+    function updateRoomScene() {
+      const wallpaper = document.querySelector('.room-wallpaper');
+      const floor = document.querySelector('.room-floor');
+      const table = document.querySelector('.table-main');
+      const rug = document.querySelector('.room-rug');
+      const fridge = document.querySelector('.fridge');
+      const windowEl = document.querySelector('.window');
+      const leftCounter = document.querySelector('.counter-left');
+      const rightCounter = document.querySelector('.counter-right');
+
+      const oldDecor = document.getElementById('dynamicDecor');
+      if (oldDecor) oldDecor.remove();
+      const decor = document.createElement('div');
+      decor.id = 'dynamicDecor';
+      decor.style.position = 'absolute';
+      decor.style.inset = '0';
+      decor.style.zIndex = '4';
+      decor.style.pointerEvents = 'none';
+      document.querySelector('.room-shell').appendChild(decor);
+
+      const configs = {
+        feed: {
+          wallpaper: 'radial-gradient(rgba(214,171,31,.55) 20%, transparent 22%) 0 0/90px 90px, linear-gradient(180deg, #b7e86b, #ccee84)',
+          floor: 'repeating-linear-gradient(90deg, #835526 0 70px, #8f5f2d 70px 74px), linear-gradient(180deg, #9c6a32, #6f451e)',
+          petBottom: '170px',
+          petScale: 1,
+          moodBottom: '310px',
+          showKitchen: true,
+          showCounters: true,
+          showWindow: true,
+          showRug: true,
+          decor: `
+            <div style="position:absolute; left:118px; top:440px; font-size:42px;">🍞</div>
+            <div style="position:absolute; right:120px; top:434px; font-size:42px;">🥛</div>
+            <div style="position:absolute; right:96px; top:140px; font-size:50px; background:rgba(255,255,255,.86); width:90px; height:90px; display:grid; place-items:center; border-radius:22px; box-shadow:var(--shadow);">🧁</div>
+          `
+        },
+        walk: {
+          wallpaper: 'linear-gradient(180deg, #9fdcff 0%, #bde7ff 58%, #7ed957 58%, #63b942 100%)',
+          floor: 'linear-gradient(180deg,#75d64f,#4ea334)',
+          petBottom: '180px',
+          petScale: 1.05,
+          moodBottom: '560px',
+          showKitchen: false,
+          showCounters: false,
+          showWindow: false,
+          showRug: false,
+          decor: `
+            <div style="position:absolute; left:36px; bottom:170px; font-size:120px;">🌳</div>
+            <div style="position:absolute; right:70px; top:70px; font-size:58px;">☀️</div>
+            <div style="position:absolute; right:150px; top:110px; font-size:42px;">☁️</div>
+            <div style="position:absolute; left:220px; bottom:150px; font-size:34px;">🌼</div>
+            <div style="position:absolute; right:220px; bottom:156px; font-size:34px;">🌼</div>
+            <div style="position:absolute; left:50%; transform:translateX(-50%); bottom:120px; width:340px; height:80px; background:rgba(255,255,255,.2); border-radius:999px;"></div>
+          `
+        },
+        toilet: {
+          wallpaper: 'linear-gradient(180deg, #d8f6ff 0%, #c4f0ff 56%, #cfd8e3 56%, #b8c2cf 100%)',
+          floor: 'repeating-linear-gradient(90deg, #dfe8f3 0 60px, #c8d5e4 60px 64px), linear-gradient(180deg,#dde7f2,#b7c4d2)',
+          petBottom: '185px',
+          petScale: 1,
+          moodBottom: '560px',
+          showKitchen: false,
+          showCounters: true,
+          showWindow: true,
+          showRug: false,
+          decor: `
+            <div style="position:absolute; left:70px; bottom:165px; font-size:120px;">🛁</div>
+            <div style="position:absolute; right:90px; bottom:180px; font-size:92px;">🚿</div>
+            <div style="position:absolute; left:120px; top:110px; font-size:62px;">🪞</div>
+            <div style="position:absolute; right:210px; top:170px; font-size:40px;">🫧</div>
+            <div style="position:absolute; right:160px; top:220px; font-size:32px;">🫧</div>
+          `
+        },
+        sleep: {
+          wallpaper: 'linear-gradient(180deg, #403b8c 0%, #5951bf 58%, #6d4c41 58%, #50362d 100%)',
+          floor: 'repeating-linear-gradient(90deg, #6f451e 0 70px, #7c5130 70px 74px), linear-gradient(180deg, #7b5642, #4e342e)',
+          petBottom: '185px',
+          petScale: 0.98,
+          moodBottom: '560px',
+          showKitchen: false,
+          showCounters: false,
+          showWindow: true,
+          showRug: false,
+          decor: `
+            <div style="position:absolute; left:76px; bottom:160px; font-size:130px;">🛏️</div>
+            <div style="position:absolute; right:120px; bottom:175px; font-size:60px;">🧸</div>
+            <div style="position:absolute; left:90px; top:80px; font-size:30px;">⭐</div>
+            <div style="position:absolute; left:150px; top:130px; font-size:22px;">✨</div>
+            <div style="position:absolute; right:120px; top:82px; font-size:38px;">🌙</div>
+          `
+        }
+      };
+
+      const cfg = configs[state.currentRoom] || configs.feed;
+      wallpaper.style.background = cfg.wallpaper;
+      floor.style.background = cfg.floor;
+      table.style.display = cfg.showKitchen ? 'block' : 'none';
+      fridge.style.display = cfg.showKitchen ? 'block' : 'none';
+      leftCounter.style.display = cfg.showCounters ? 'block' : 'none';
+      rightCounter.style.display = cfg.showCounters ? 'block' : 'none';
+      windowEl.style.display = cfg.showWindow ? 'block' : 'none';
+      rug.style.display = cfg.showRug ? 'block' : 'none';
+      els.roomPetWrap.style.bottom = cfg.petBottom;
+      els.roomPetWrap.style.transform = `translateX(-50%) scale(${cfg.petScale})`;
+      els.moodBanner.style.bottom = cfg.moodBottom;
+      els.roomLabel.textContent = GAME_CONFIG.ui.roomLabels[state.currentRoom];
+      els.roomSubtitle.textContent = GAME_CONFIG.ui.roomSubtitles[state.currentRoom];
+      decor.innerHTML = cfg.decor;
+    }
+
+    function renderRoomItems() {
+      const items = GAME_CONFIG.rooms[state.currentRoom] || [];
+      els.roomItems.innerHTML = '';
+      items.forEach((item) => {
+        const node = document.createElement('button');
+        node.type = 'button';
+        node.className = 'food-slot';
+        node.style.left = `${item.x}px`;
+        node.style.top = `${item.y}px`;
+        node.innerHTML = `<div class="plate"></div><div class="food-item">${item.emoji}</div><div class="food-badge">${item.badge}</div>`;
+        node.addEventListener('click', () => startActionTask(state.currentRoom, item));
+        els.roomItems.appendChild(node);
+      });
     }
 
     function updateUI() {
@@ -858,6 +908,7 @@
       updateBar(els.hygieneBar, state.hygiene);
       els.statsText.textContent = `Решено заданий: ${state.totalTasks} · Верных ответов: ${state.correctTasks} · Ошибок: ${state.wrongTasks}`;
       updateMoodText();
+      updateRoomScene();
       updateMoodVisual();
       renderRoomItems();
       document.querySelectorAll('.nav-pill').forEach(btn => btn.classList.toggle('active', btn.dataset.nav === state.currentRoom));
@@ -865,29 +916,8 @@
 
     function applyDeltaSet(delta) {
       Object.entries(delta).forEach(([key, value]) => {
-        if (typeof state[key] === 'number') {
-          state[key] = clamp(state[key] + value);
-        }
+        if (typeof state[key] === 'number') state[key] = clamp(state[key] + value);
       });
-    }
-
-    function applyPassiveDecay() {
-      if (!state.started || state.gameOver) return;
-      const mult = currentSpeedMultiplier();
-      const decay = GAME_CONFIG.time.passiveDecay;
-
-      state.hunger = clamp(state.hunger + decay.hunger * mult);
-      state.happiness = clamp(state.happiness + decay.happiness * mult);
-      state.energy = clamp(state.energy + decay.energy * mult);
-      state.hygiene = clamp(state.hygiene + decay.hygiene * mult);
-
-      if (state.hunger >= 80 || state.hygiene <= 20 || state.energy <= 20) {
-        state.happiness = clamp(state.happiness + GAME_CONFIG.time.penaltyIfNeglected.happiness * mult);
-      }
-
-      checkWarnings();
-      updateUI();
-      checkGameState();
     }
 
     function checkWarnings() {
@@ -898,40 +928,34 @@
       if (state.hygiene <= 20) return updateFeedback(warnings.hygiene, 'warn');
     }
 
-    function isCriticalState(includeMaxHunger = true) {
-      const critical = GAME_CONFIG.limits.criticalStat;
-      return (
-        state.happiness <= critical ||
-        state.energy <= critical ||
-        state.hygiene <= critical ||
-        (includeMaxHunger && state.hunger >= GAME_CONFIG.limits.maxStat)
-      );
-    }
-
     function checkGameState() {
       if (state.gameOver) return;
+      if (state.happiness <= 0) return endGame('Поражение', 'Питомец совсем загрустил и убежал.');
+      if (state.energy <= 0) return endGame('Поражение', 'Питомец слишком устал и заболел.');
+      if (state.hygiene <= 0) return endGame('Поражение', 'Из-за плохой гигиены питомец заболел.');
+      if (state.hunger >= 100) return endGame('Поражение', 'Питомец слишком проголодался и ослаб.');
+      if (state.level >= GAME_CONFIG.meta.maxLevel && state.xp >= state.xpToNext) return endGame('Победа!', 'Ты вырастил питомца до максимального уровня.');
+    }
 
-      if (state.happiness <= 0) {
-        return endGame('Поражение', 'Питомец совсем загрустил и убежал.');
+    function applyPassiveDecay() {
+      if (!state.started || state.gameOver) return;
+      const mult = currentSpeedMultiplier();
+      const decay = GAME_CONFIG.time.passiveDecay;
+      state.hunger = clamp(state.hunger + decay.hunger * mult);
+      state.happiness = clamp(state.happiness + decay.happiness * mult);
+      state.energy = clamp(state.energy + decay.energy * mult);
+      state.hygiene = clamp(state.hygiene + decay.hygiene * mult);
+      if (state.hunger >= 80 || state.hygiene <= 20 || state.energy <= 20) {
+        state.happiness = clamp(state.happiness + GAME_CONFIG.time.penaltyIfNeglected.happiness * mult);
       }
-      if (state.energy <= 0) {
-        return endGame('Поражение', 'Питомец слишком устал и заболел.');
-      }
-      if (state.hygiene <= 0) {
-        return endGame('Поражение', 'Из-за плохой гигиены питомец заболел.');
-      }
-      if (state.hunger >= 100) {
-        return endGame('Поражение', 'Питомец слишком проголодался и ослаб.');
-      }
-      if (state.level >= GAME_CONFIG.meta.maxLevel && state.xp >= state.xpToNext) {
-        return endGame('Победа!', 'Ты вырастил питомца до максимального уровня.');
-      }
+      checkWarnings();
+      updateUI();
+      checkGameState();
     }
 
     function gainXp(baseAmount) {
       const diff = currentDifficultyConfig();
       state.xp += Math.round(baseAmount * diff.xpMultiplier);
-
       while (state.xp >= state.xpToNext && state.level < GAME_CONFIG.meta.maxLevel) {
         state.xp -= state.xpToNext;
         state.level += 1;
@@ -939,10 +963,7 @@
         updateFeedback(`Уровень повышен! Теперь у питомца ${state.level} уровень.`, 'good');
         animatePet();
       }
-
-      if (state.level === GAME_CONFIG.meta.maxLevel && state.xp > state.xpToNext) {
-        state.xp = state.xpToNext;
-      }
+      if (state.level === GAME_CONFIG.meta.maxLevel && state.xp > state.xpToNext) state.xp = state.xpToNext;
     }
 
     function endGame(title, reason) {
@@ -950,10 +971,9 @@
       state.endReason = reason;
       clearIntervals();
       closeTask();
-
       els.endTitle.textContent = title;
       els.endReason.textContent = reason;
-      els.endStats.textContent = `Имя питомца: ${state.petName}. Уровень: ${state.level}. Время игры: ${formatTime(state.elapsedSec)}. Всего очков опыта: ${state.correctTasks * GAME_CONFIG.progression.baseXpPerSuccess}. Решено заданий: ${state.totalTasks}. Верных ответов: ${state.correctTasks}. Ошибок: ${state.wrongTasks}.`;
+      els.endStats.textContent = `Имя питомца: ${state.petName}. Уровень: ${state.level}. Время игры: ${formatTime(state.elapsedSec)}. Решено заданий: ${state.totalTasks}. Верных ответов: ${state.correctTasks}. Ошибок: ${state.wrongTasks}.`;
       setScreen('endScreen');
     }
 
@@ -971,7 +991,6 @@
       let b = randInt(min, max);
       let answer;
       let q;
-
       if (op === '+') {
         answer = a + b;
         q = `${a} + ${b} = ?`;
@@ -980,13 +999,11 @@
         answer = a - b;
         q = `${a} - ${b} = ?`;
       } else {
-        const levelBoost = Math.min(state.level + 1, 5);
         a = randInt(min, Math.min(max, 4 + state.level * 4));
-        b = randInt(2, Math.min(10, levelBoost + 4));
+        b = randInt(2, Math.min(10, state.level + 5));
         answer = a * b;
         q = `${a} × ${b} = ?`;
       }
-
       return {
         type: Math.random() < diff.choiceProbability ? 'choice' : 'input',
         question: q,
@@ -1022,10 +1039,33 @@
     function generateTask(actionKey) {
       const useText = currentDifficultyConfig().allowTextQuestions && Math.random() < 0.35;
       const base = useText ? generateTextQuestion() : generateMathQuestion();
-      return {
-        ...base,
-        actionKey
-      };
+      return { ...base, actionKey };
+    }
+
+    function updateAttemptInfo() {
+      const max = GAME_CONFIG.attempts.perTask;
+      els.attemptInfo.textContent = `${max - state.attemptsLeft + 1} из ${max}`;
+      els.attemptBadge.textContent = String(Math.max(1, state.attemptsLeft));
+    }
+
+    function startTaskTimer() {
+      stopTaskTimer();
+      let seconds = GAME_CONFIG.time.taskSeconds;
+      els.taskTimerLabel.textContent = `⏱ ${seconds} сек`;
+      taskTimerInterval = setInterval(() => {
+        seconds -= 1;
+        els.taskTimerLabel.textContent = `⏱ ${seconds} сек`;
+        if (seconds <= 0) {
+          stopTaskTimer();
+          handleTaskFail('timeout');
+        }
+      }, 1000);
+    }
+
+    function stopTaskTimer() {
+      if (taskTimerInterval) clearInterval(taskTimerInterval);
+      taskTimerInterval = null;
+      els.taskTimerLabel.textContent = '';
     }
 
     function renderTask(task) {
@@ -1055,23 +1095,15 @@
       updateUI();
     }
 
-    function updateAttemptInfo() {
-      const max = GAME_CONFIG.attempts.perTask;
-      els.attemptInfo.textContent = `${max - state.attemptsLeft + 1} из ${max}`;
-      els.attemptBadge.textContent = String(Math.max(1, state.attemptsLeft));
-    } из ${max}`;
-    }
-
     function closeTask() {
       state.activeTask = null;
       state.attemptsLeft = 0;
       els.taskBox.classList.remove('active');
       els.choicesWrap.innerHTML = '';
       els.taskAnswer.value = '';
-      els.taskTimerLabel.textContent = '';
       els.taskMeta.textContent = '';
       stopTaskTimer();
-      updateMoodVisual();
+      updateUI();
     }
 
     function normalizeAnswer(value) {
@@ -1082,50 +1114,30 @@
       if (!state.activeTask || state.gameOver) return;
       const answer = normalizeAnswer(rawAnswer ?? els.taskAnswer.value);
       const correct = normalizeAnswer(state.activeTask.answer);
-
       if (!answer) {
         updateFeedback('Сначала введи ответ.', 'warn');
         return;
       }
-
-      if (answer === correct) {
-        handleTaskSuccess();
-      } else {
-        handleTaskFail();
-      }
+      if (answer === correct) handleTaskSuccess();
+      else handleTaskFail('wrong');
     }
 
     function handleTaskSuccess() {
-      const actionKey = state.activeTask.actionKey;
-      const action = GAME_CONFIG.actions[actionKey];
-      const taskCopy = JSON.parse(JSON.stringify(state.activeTask));
+      const task = JSON.parse(JSON.stringify(state.activeTask));
+      const action = GAME_CONFIG.actions[task.actionKey];
       const mult = currentDifficultyConfig().statMultiplier;
       const successDelta = {};
-      Object.entries(action.success).forEach(([key, value]) => { successDelta[key] = Math.round(value * mult); });
-      applyDeltaSet(successDelta);
-      if (taskCopy?.selectedOption?.bonus) applyDeltaSet(taskCopy.selectedOption.bonus);
-      gainXp(GAME_CONFIG.progression.baseXpPerSuccess + action.xpBonus);
-      state.totalTasks += 1;
-      state.correctTasks += 1;
-      animatePet();
-      updateFeedback(`Отлично! ${state.petName} успешно выполнил действие «${taskCopy.selectedOption?.label || action.label}».`, 'good');
-      closeTask();
-      updateUI();
-      checkGameState();
-    };
-
       Object.entries(action.success).forEach(([key, value]) => {
         successDelta[key] = Math.round(value * mult);
       });
-
       applyDeltaSet(successDelta);
+      if (task.selectedOption?.bonus) applyDeltaSet(task.selectedOption.bonus);
       gainXp(GAME_CONFIG.progression.baseXpPerSuccess + action.xpBonus);
       state.totalTasks += 1;
       state.correctTasks += 1;
       animatePet();
-      updateFeedback(randomFrom(GAME_CONFIG.ui.positiveMessages), 'good');
+      updateFeedback(`Отлично! ${state.petName} успешно выполнил действие «${task.selectedOption?.label || action.label}».`, 'good');
       closeTask();
-      updateUI();
       checkGameState();
     }
 
@@ -1136,241 +1148,102 @@
         updateFeedback(reason === 'timeout' ? 'Время вышло. Попробуй ещё раз.' : 'Ответ неверный. Попробуй ещё раз.', 'bad');
         return;
       }
-      const actionKey = state.activeTask.actionKey;
-      const action = GAME_CONFIG.actions[actionKey];
-      const taskCopy = JSON.parse(JSON.stringify(state.activeTask));
-      applyDeltaSet(action.fail);
+      const task = JSON.parse(JSON.stringify(state.activeTask));
+      applyDeltaSet(GAME_CONFIG.actions[task.actionKey].fail);
       state.totalTasks += 1;
       state.wrongTasks += 1;
-      updateFeedback(`${reason === 'timeout' ? 'Время вышло.' : 'Неверно.'} Правильный ответ: ${taskCopy.answer}`, 'bad');
+      updateFeedback(`${reason === 'timeout' ? 'Время вышло.' : 'Неверно.'} Правильный ответ: ${task.answer}`, 'bad');
       closeTask();
-      updateUI();
       checkGameState();
     }
 
-    document.querySelectorAll('[data-action]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (state.gameOver) return;
-        openScene(btn.dataset.action);
-      });
-    });
-
-    document.querySelectorAll('[data-nav]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const map = { play: 'walk', feed: 'feed', toilet: 'toilet', sleep: 'sleep' };
-        openScene(map[btn.dataset.nav] || 'feed');
-      });
-    });
-
-    els.submitTaskBtn.addEventListener('click', () => submitAnswer());
-    els.cancelTaskBtn.addEventListener('click', () => {
+    function openScene(actionKey) {
+      if (state.gameOver) return;
+      state.currentRoom = actionKey;
       closeTask();
-      updateFeedback('Действие отменено.', 'warn');
-    });
-    els.taskAnswer.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') submitAnswer();
-    });
-
-    els.startBtn.addEventListener('click', startGame);
-    els.saveGameBtn?.addEventListener('click', saveGame);
-    els.loadGameBtn?.addEventListener('click', loadGame);
-    els.restartBtn.addEventListener('click', () => {
-      resetGame();
-      setScreen('startScreen');
-    });
-    els.playAgainBtn.addEventListener('click', () => {
-      resetGame();
-      setScreen('startScreen');
-    });
-
-        // --- Дополнительные игровые улучшения ---
-
-    const SAVE_KEY = 'tamagotchi-save-v2';
-
-    GAME_CONFIG.scenes = {
-      meta: {
-        backgrounds: {
-          feed: 'linear-gradient(180deg, #fff7ed 0%, #ffedd5 48%, #fde68a 100%)',
-          walk: 'linear-gradient(180deg, #dbeafe 0%, #bfdbfe 40%, #86efac 100%)',
-          toilet: 'linear-gradient(180deg, #ecfeff 0%, #cffafe 45%, #e0f2fe 100%)',
-          sleep: 'linear-gradient(180deg, #1e1b4b 0%, #312e81 45%, #4338ca 100%)'
-        }
-      },
-      feed: {
-        title: 'Кухня',
-        subtitle: 'Питомец за столом. Выбери, чем его кормить.',
-        emoji: '🍽️',
-        options: [
-          { id: 'apple', label: 'Яблоко', emoji: '🍎', bonus: { happiness: 2 } },
-          { id: 'porridge', label: 'Каша', emoji: '🥣', bonus: { hunger: -2 } },
-          { id: 'carrot', label: 'Морковка', emoji: '🥕', bonus: { hygiene: 1 } }
-        ]
-      },
-      walk: {
-        title: 'Улица',
-        subtitle: 'Питомец вышел гулять. Выбери формат прогулки.',
-        emoji: '🌳',
-        options: [
-          { id: 'park', label: 'Парк', emoji: '🌳', bonus: { happiness: 3 } },
-          { id: 'ball', label: 'С мячом', emoji: '⚽', bonus: { happiness: 4, energy: -1 } },
-          { id: 'run', label: 'Пробежка', emoji: '🏃', bonus: { energy: 2, hunger: 1 } }
-        ]
-      },
-      toilet: {
-        title: 'Ванная',
-        subtitle: 'Питомцу нужно привести себя в порядок.',
-        emoji: '🛁',
-        options: [
-          { id: 'wash', label: 'Умыться', emoji: '🚿', bonus: { hygiene: 3 } },
-          { id: 'brush', label: 'Почистить зубы', emoji: '🪥', bonus: { hygiene: 4 } },
-          { id: 'bath', label: 'Ванна', emoji: '🫧', bonus: { happiness: 2, hygiene: 5 } }
-        ]
-      },
-      sleep: {
-        title: 'Спальня',
-        subtitle: 'Подготовь питомца ко сну.',
-        emoji: '🌙',
-        options: [
-          { id: 'blanket', label: 'Под одеяло', emoji: '🛌', bonus: { energy: 3 } },
-          { id: 'lullaby', label: 'Колыбельная', emoji: '🎵', bonus: { happiness: 2 } },
-          { id: 'night', label: 'Ночной сон', emoji: '💤', bonus: { energy: 4 } }
-        ]
-      }
-    };
-
-    const moodLabel = document.createElement('div');
-    moodLabel.style.marginTop = '10px';
-    moodLabel.style.fontWeight = '600';
-    moodLabel.style.background = 'rgba(255,255,255,.88)';
-    moodLabel.style.padding = '8px 12px';
-    moodLabel.style.borderRadius = '999px';
-    moodLabel.style.boxShadow = 'var(--shadow)';
-    moodLabel.style.position = 'absolute';
-    moodLabel.style.left = '16px';
-    moodLabel.style.bottom = '16px';
-    document.querySelector('.pet-stage').appendChild(moodLabel);
-
-    const sceneStageEl = document.getElementById('sceneStage');
-    const sceneEls = {
-      stage: sceneStageEl,
-      bg: document.getElementById('sceneBackground'),
-      title: document.getElementById('sceneTitleBadge'),
-      subtitle: document.getElementById('sceneSubtitleBadge'),
-      layer: document.getElementById('sceneLayer'),
-      pet: document.getElementById('scenePet'),
-      options: document.getElementById('sceneOptionsFloating')
-    };
-
-    const taskMeta = document.createElement('div');
-    taskMeta.className = 'muted';
-    taskMeta.style.fontWeight = '600';
-    taskMeta.style.marginBottom = '6px';
-    els.taskBox.prepend(taskMeta);
-
-    let taskTimerInterval = null;
-    let taskTimeLeft = 0;
-    const timerLabel = document.createElement('div');
-    timerLabel.style.fontWeight = '700';
-    timerLabel.style.marginBottom = '6px';
-    els.taskBox.prepend(timerLabel);
-
-    const saveBar = document.createElement('div');
-    saveBar.className = 'row';
-    saveBar.style.marginTop = '12px';
-    saveBar.innerHTML = `
-      <button type="button" class="secondary" id="saveGameBtn">Сохранить</button>
-      <button type="button" class="secondary" id="loadGameBtn">Загрузить</button>
-      <button type="button" class="secondary" id="clearSaveBtn">Сбросить сохранение</button>
-    `;
-    document.querySelector('.topline').appendChild(saveBar);
-
-    function updateMoodText() {
-      if (state.hunger > 70) moodLabel.textContent = `${state.petName} очень голоден 🍎`;
-      else if (state.energy < 30) moodLabel.textContent = `${state.petName} устал 😴`;
-      else if (state.happiness < 30) moodLabel.textContent = `${state.petName} грустит ☹️`;
-      else if (state.hygiene < 30) moodLabel.textContent = `${state.petName} хочет привести себя в порядок 🫧`;
-      else moodLabel.textContent = `${state.petName} чувствует себя отлично 😄`;
-    }
-
-    function startTaskTimer() {
-      taskTimeLeft = 10;
-      timerLabel.textContent = `⏱ ${taskTimeLeft} сек`;
-      if (taskTimerInterval) clearInterval(taskTimerInterval);
-      taskTimerInterval = setInterval(() => {
-        taskTimeLeft -= 1;
-        timerLabel.textContent = `⏱ ${taskTimeLeft} сек`;
-        if (taskTimeLeft <= 0) {
-          clearInterval(taskTimerInterval);
-          handleTaskFail('timeout');
-        }
-      }, 1000);
-    }
-
-    function stopTaskTimer() {
-      if (taskTimerInterval) clearInterval(taskTimerInterval);
-      taskTimerInterval = null;
-      timerLabel.textContent = '';
-    }
-
-    function randomEvent() {
-      if (state.gameOver || !state.started || state.activeTask) return;
-      const r = Math.random();
-      if (r < 0.18) {
-        state.happiness = clamp(state.happiness + 10);
-        updateFeedback('Питомец нашёл яблоко 🍎 +10 счастья', 'good');
-        animatePet();
-      } else if (r < 0.32) {
-        state.hygiene = clamp(state.hygiene - 15);
-        updateFeedback('Питомец испачкался в луже 💧 -15 гигиены', 'warn');
-      }
+      updateFeedback(`Открыта комната: ${GAME_CONFIG.ui.roomLabels[actionKey]}. Нажми на предмет в сцене.`, 'warn');
       updateUI();
-      checkGameState();
     }
 
-    setInterval(randomEvent, 45000);
+    function startActionTask(actionKey, option) {
+      if (state.gameOver) return;
+      const task = generateTask(actionKey);
+      task.selectedOption = option;
+      renderTask(task);
+      updateFeedback(`Чтобы выполнить действие «${option.label}», реши задание.`, 'warn');
+    }
 
-    function updateEvolution() {
-      const colors = { 1: '#f59e0b', 2: '#fbbf24', 3: '#34d399', 4: '#60a5fa', 5: '#f472b6' };
-      document.documentElement.style.setProperty('--pet-color', colors[state.level] || GAME_CONFIG.petSkins[state.petType].color);
-      els.pet.style.transform = `scale(${1 + (state.level - 1) * 0.06})`;
-      let accessory = document.getElementById('petAccessory');
-      if (!accessory) {
-        accessory = document.createElement('div');
-        accessory.id = 'petAccessory';
-        accessory.style.position = 'absolute';
-        accessory.style.top = '14px';
-        accessory.style.left = '50%';
-        accessory.style.transform = 'translateX(-50%)';
-        accessory.style.fontSize = '28px';
-        els.pet.appendChild(accessory);
-      }
-      accessory.textContent = state.level >= 5 ? '👑' : state.level === 4 ? '🎀' : state.level === 3 ? '⭐' : state.level === 2 ? '🧢' : '';
+    function clearIntervals() {
+      if (decayInterval) clearInterval(decayInterval);
+      if (timerInterval) clearInterval(timerInterval);
+      if (taskTimerInterval) clearInterval(taskTimerInterval);
+    }
+
+    function resetGame() {
+      state.currentRoom = 'feed';
+      state.started = false;
+      state.petName = '';
+      state.petType = 'dog';
+      state.difficulty = 'medium';
+      state.speedMode = 'normal';
+      state.level = 1;
+      state.xp = 0;
+      state.xpToNext = getXpTarget(1);
+      state.hunger = 50;
+      state.happiness = 80;
+      state.energy = 80;
+      state.hygiene = 80;
+      state.totalTasks = 0;
+      state.correctTasks = 0;
+      state.wrongTasks = 0;
+      state.elapsedSec = 0;
+      state.activeTask = null;
+      state.attemptsLeft = 0;
+      state.gameOver = false;
+      state.endReason = '';
+      clearIntervals();
+      els.taskBox.classList.remove('active');
+      els.taskAnswer.value = '';
+      els.taskMeta.textContent = '';
+      els.taskTimerLabel.textContent = '';
+    }
+
+    function startGame() {
+      resetGame();
+      state.petName = (els.petNameInput.value || GAME_CONFIG.meta.defaultPetName).trim();
+      state.difficulty = els.difficultySelect.value;
+      state.speedMode = els.speedModeSelect.value;
+      state.started = true;
+      setScreen('gameScreen');
+      applyPetSkin();
+      updateUI();
+      updateFeedback('Игра началась. Выбери действие для питомца.', 'warn');
+      decayInterval = setInterval(applyPassiveDecay, GAME_CONFIG.time.tickMs);
+      timerInterval = setInterval(() => {
+        state.elapsedSec += 1;
+        els.timeLabel.textContent = formatTime(state.elapsedSec);
+      }, GAME_CONFIG.time.sessionTimerMs);
     }
 
     function saveGame() {
-      const payload = {
-        state: JSON.parse(JSON.stringify(state)),
-        config: getSerializableConfig()
-      };
-      localStorage.setItem(SAVE_KEY, JSON.stringify(payload));
+      const payload = { state: JSON.parse(JSON.stringify(state)) };
+      localStorage.setItem('tamagotchi-save-v3', JSON.stringify(payload));
       updateFeedback('Игра сохранена.', 'good');
     }
 
     function loadGame() {
-      const raw = localStorage.getItem(SAVE_KEY);
+      const raw = localStorage.getItem('tamagotchi-save-v3');
       if (!raw) {
         updateFeedback('Сохранение не найдено.', 'warn');
         return;
       }
       const payload = JSON.parse(raw);
-      applyConfigPatch(GAME_CONFIG, payload.config || {});
       Object.assign(state, payload.state || {});
       state.activeTask = null;
       state.gameOver = false;
-      applyPetSkin();
-      updateEvolution();
-      updateUI();
       setScreen('gameScreen');
+      applyPetSkin();
+      updateUI();
       updateFeedback('Сохранение загружено.', 'good');
       clearIntervals();
       decayInterval = setInterval(applyPassiveDecay, GAME_CONFIG.time.tickMs);
@@ -1379,192 +1252,6 @@
         els.timeLabel.textContent = formatTime(state.elapsedSec);
       }, GAME_CONFIG.time.sessionTimerMs);
     }
-
-    function clearSave() {
-      localStorage.removeItem(SAVE_KEY);
-      updateFeedback('Сохранение удалено.', 'warn');
-    }
-
-    function getScenePetHtml() {
-      return `
-        <div class="pet ${state.petType}" style="width:150px;height:150px;">
-          <div class="ear left"></div>
-          <div class="ear right"></div>
-          <div class="pet-body">
-            <div class="eye left"></div>
-            <div class="eye right"></div>
-            <div class="mouth"></div>
-            <div class="cheek left"></div>
-            <div class="cheek right"></div>
-          </div>
-        </div>
-      `;
-    }
-
-    function getSceneDecor(actionKey) {
-      if (actionKey === 'feed') {
-        return `
-          <div class="prop cardlike" style="left:8%;top:18%;font-size:30px;">🪟</div>
-          <div class="prop cardlike" style="right:8%;top:16%;font-size:34px;">🧁</div>
-          <div class="prop" style="left:18%;bottom:92px;width:64%;height:18px;background:#8b5e3c;border-radius:999px;"></div>
-          <div class="prop big" style="left:50%;bottom:106px;transform:translateX(-50%);">🍽️</div>
-          <div class="prop medium" style="right:14%;bottom:110px;">🥛</div>
-          <div class="prop medium" style="left:14%;bottom:108px;">🍞</div>
-        `;
-      }
-      if (actionKey === 'walk') {
-        return `
-          <div class="prop big" style="left:8%;bottom:110px;">🌳</div>
-          <div class="prop medium" style="right:10%;bottom:120px;">☀️</div>
-          <div class="prop medium" style="right:18%;bottom:92px;">🌼</div>
-          <div class="prop medium" style="left:22%;bottom:86px;">⚽</div>
-          <div class="prop small" style="left:42%;top:26px;">☁️</div>
-          <div class="prop small" style="right:32%;top:40px;">☁️</div>
-        `;
-      }
-      if (actionKey === 'toilet') {
-        return `
-          <div class="prop cardlike" style="left:8%;top:18%;font-size:30px;">🪞</div>
-          <div class="prop big" style="right:12%;bottom:104px;">🛁</div>
-          <div class="prop medium" style="left:16%;bottom:96px;">🧴</div>
-          <div class="prop medium" style="left:32%;bottom:102px;">🫧</div>
-          <div class="prop medium" style="right:30%;bottom:92px;">🚿</div>
-        `;
-      }
-      return `
-        <div class="prop small" style="left:12%;top:26px;">⭐</div>
-        <div class="prop small" style="right:14%;top:30px;">🌟</div>
-        <div class="prop big" style="left:50%;bottom:92px;transform:translateX(-50%);">🛏️</div>
-        <div class="prop medium" style="left:18%;bottom:96px;">🧸</div>
-        <div class="prop medium" style="right:18%;bottom:98px;">🌙</div>
-      `;
-    }
-
-    function getScenePetClass(actionKey) {
-      if (actionKey === 'feed') return 'pet eating';
-      if (actionKey === 'walk') return 'pet walking';
-      if (actionKey === 'toilet') return 'pet washing';
-      if (actionKey === 'sleep') return 'pet sleeping';
-      return 'pet';
-    }
-
-    function openScene(actionKey) {
-      state.currentRoom = actionKey;
-      closeTask();
-      updateUI();
-      const label = actionKey === 'feed' ? 'Кухня' : actionKey === 'walk' ? 'Прогулка' : actionKey === 'toilet' ? 'Ванная' : 'Спальня';
-      updateFeedback(`Открыта комната: ${label}. Нажми на предмет в сцене.`, 'warn');
-    }
-
-    function closeScene() {
-      state.currentRoom = 'feed';
-      updateUI();
-    }
-
-    function startActionTask(actionKey, option) {
-      const task = generateTask(actionKey);
-      task.selectedOption = option;
-      renderTask(task);
-      els.taskMeta.textContent = `Выбрано: ${option.emoji} ${option.label}`;
-      updateFeedback(`Чтобы выполнить действие «${option.label}», реши задание.`, 'warn');
-    } ${option.label}`;
-      updateFeedback(`Чтобы выполнить действие «${GAME_CONFIG.actions[actionKey].label}», реши задание.`, 'warn');
-    }
-
-    function applyOptionBonus(task) {
-      if (!task?.selectedOption?.bonus) return;
-      applyDeltaSet(task.selectedOption.bonus);
-    }
-
-    function explainCorrectAnswer(task) {
-      if (!task) return '';
-      const q = task.question.replace('= ?', '').trim();
-      return q ? ` ${q} = ${task.answer}.` : ` Правильный ответ: ${task.answer}.`;
-    }
-
-    const originalStartGame = startGame;
-    startGame = function () {
-      originalStartGame();
-      updateEvolution();
-      updateMoodText();
-    };
-
-    const originalResetGame = resetGame;
-    resetGame = function () {
-      originalResetGame();
-      stopTaskTimer();
-      closeScene();
-      taskMeta.textContent = '';
-      moodLabel.textContent = '';
-      const accessory = document.getElementById('petAccessory');
-      if (accessory) accessory.textContent = '';
-      els.pet.style.transform = '';
-    };
-
-    const originalGainXp = gainXp;
-    gainXp = function (amount) {
-      originalGainXp(amount);
-      updateEvolution();
-    };
-
-    const originalRenderTask = renderTask;
-    renderTask = function (task) {
-      originalRenderTask(task);
-      taskMeta.textContent = task.selectedOption ? `Выбрано: ${task.selectedOption.emoji} ${task.selectedOption.label}` : '';
-      startTaskTimer();
-    };
-
-    const originalCloseTask = closeTask;
-    closeTask = function () {
-      stopTaskTimer();
-      taskMeta.textContent = '';
-      originalCloseTask();
-    };
-
-    const originalHandleTaskSuccess = handleTaskSuccess;
-    handleTaskSuccess = function () {
-      const task = state.activeTask ? JSON.parse(JSON.stringify(state.activeTask)) : null;
-      originalHandleTaskSuccess();
-      applyOptionBonus(task);
-      if (task?.selectedOption) {
-        updateFeedback(`Отлично! ${state.petName} выполнил действие «${task.selectedOption.label}» и радуется.`, 'good');
-      }
-      updateUI();
-      checkGameState();
-    };
-
-    const originalHandleTaskFail = handleTaskFail;
-    handleTaskFail = function (reason = 'wrong') {
-      const task = state.activeTask ? JSON.parse(JSON.stringify(state.activeTask)) : null;
-      originalHandleTaskFail();
-      if (task) {
-        const prefix = reason === 'timeout' ? 'Время вышло.' : 'Неверно.';
-        updateFeedback(`${prefix}${explainCorrectAnswer(task)}`, 'bad');
-      }
-      updateUI();
-    };
-
-    const originalUpdateUI = updateUI;
-    updateUI = function () {
-      originalUpdateUI();
-      updateMoodText();
-      updateEvolution();
-    };
-
-    document.querySelectorAll('[data-action]').forEach((oldBtn) => {
-      const clone = oldBtn.cloneNode(true);
-      oldBtn.replaceWith(clone);
-      clone.addEventListener('click', () => {
-        if (state.gameOver || state.activeTask) return;
-        openScene(clone.dataset.action);
-      });
-    });
-
-        saveBar.querySelector('#saveGameBtn').addEventListener('click', saveGame);
-    saveBar.querySelector('#loadGameBtn').addEventListener('click', loadGame);
-    saveBar.querySelector('#clearSaveBtn').addEventListener('click', clearSave);
-
-    // --- Подготовка к редактору / интеграции в Genially ---
 
     function getSerializableConfig() {
       return JSON.parse(JSON.stringify(GAME_CONFIG));
@@ -1588,74 +1275,8 @@
     function importConfigJson(jsonText) {
       const parsed = JSON.parse(jsonText);
       applyConfigPatch(GAME_CONFIG, parsed);
-          // --- Исправление переходов между комнатами ---
-    const mainPetStage = document.querySelector('.pet-stage');
-
-    function showMainStage() {
-      if (mainPetStage) mainPetStage.style.display = 'grid';
-      if (sceneEls?.stage) sceneEls.stage.classList.remove('active');
-    }
-
-    function showSceneStage() {
-      if (mainPetStage) mainPetStage.style.display = 'none';
-      if (sceneEls?.stage) sceneEls.stage.classList.add('active');
-    }
-
-    const originalOpenSceneSafe = typeof openScene === 'function' ? openScene : null;
-    if (originalOpenSceneSafe) {
-      openScene = function(actionKey) {
-        showSceneStage();
-        originalOpenSceneSafe(actionKey);
-      };
-    }
-
-    const originalCloseSceneSafe = typeof closeScene === 'function' ? closeScene : null;
-    if (originalCloseSceneSafe) {
-      closeScene = function() {
-        originalCloseSceneSafe();
-        showMainStage();
-      };
-    }
-
-    const originalStartActionTaskSafe = typeof startActionTask === 'function' ? startActionTask : null;
-    if (originalStartActionTaskSafe) {
-      startActionTask = function(actionKey, option) {
-        originalStartActionTaskSafe(actionKey, option);
-        showMainStage();
-      };
-    }
-
-    const originalResetGameSafe = typeof resetGame === 'function' ? resetGame : null;
-    if (originalResetGameSafe) {
-      resetGame = function() {
-        originalResetGameSafe();
-        showMainStage();
-      };
-    }
-
-    // Надёжный перехват кликов по кнопкам действий.
-    // Используем capture-фазу, чтобы старые обработчики не запускали задание напрямую.
-    document.addEventListener('click', function(event) {
-      const btn = event.target.closest('[data-action]');
-      if (!btn) return;
-      event.preventDefault();
-      event.stopPropagation();
-      if (typeof event.stopImmediatePropagation === 'function') event.stopImmediatePropagation();
-      if (state.gameOver || state.activeTask) return;
-      if (typeof openScene === 'function') {
-        openScene(btn.dataset.action);
-      }
-    }, true);
-
-    // На старте всегда показываем главную сцену.
-    showMainStage();
-
-    els.petTypeSelect.value = 'dog';
-    els.petTypeSelect.disabled = true;
-    els.petNameInput.value = GAME_CONFIG.meta.defaultPetName;
-    applyPetSkin();
-    updateUI();
       updateFeedback('Конфигурация обновлена.', 'good');
+      updateUI();
     }
 
     function getGameState() {
@@ -1670,7 +1291,39 @@
         obj = obj[parts[i]];
       }
       obj[parts[parts.length - 1]] = value;
+      updateUI();
     }
+
+    document.querySelectorAll('[data-action]').forEach(btn => {
+      btn.addEventListener('click', () => openScene(btn.dataset.action));
+    });
+
+    document.querySelectorAll('[data-nav]').forEach(btn => {
+      btn.addEventListener('click', () => openScene(btn.dataset.nav));
+    });
+
+    els.submitTaskBtn.addEventListener('click', () => submitAnswer());
+    els.cancelTaskBtn.addEventListener('click', () => {
+      closeTask();
+      updateFeedback('Действие отменено.', 'warn');
+    });
+    els.taskAnswer.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') submitAnswer();
+    });
+    els.startBtn.addEventListener('click', startGame);
+    els.saveGameBtn.addEventListener('click', saveGame);
+    els.loadGameBtn.addEventListener('click', loadGame);
+    els.restartBtn.addEventListener('click', () => {
+      resetGame();
+      setScreen('startScreen');
+    });
+    els.playAgainBtn.addEventListener('click', () => {
+      resetGame();
+      setScreen('startScreen');
+    });
+
+    els.petNameInput.value = GAME_CONFIG.meta.defaultPetName;
+    applyPetSkin();
 
     window.TamagotchiGameAPI = {
       startGame,
@@ -1681,8 +1334,6 @@
       importConfigJson,
       setGameParam
     };
-
-    els.petNameInput.value = GAME_CONFIG.meta.defaultPetName;
   </script>
 </body>
 </html>
